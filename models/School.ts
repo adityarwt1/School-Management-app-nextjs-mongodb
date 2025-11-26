@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose";
 
-interface SchoolInterface extends Document {
-  udiseSchCode: string;
+export interface SchoolInterface extends Document {
+  diseSchCode: string;
   schoolName: string;
   pincode: number;
   classFrm: number;
@@ -12,13 +12,14 @@ interface SchoolInterface extends Document {
   email: string | null;
   address: string;
   schCatDesc: string;
-  schLocRuralUrban: number;
-  schCategoryType: string;
+  schLocRuralUrban: string;
+  principleName:string,
+  mobileNumber:number
 }
 
 const SchoolSchema: Schema<SchoolInterface> = new Schema(
   {
-    udiseSchCode: { type: String, required: true },
+    diseSchCode: { type: String, required: true },
     schoolName: { type: String, required: true },
     pincode: { type: Number },
 
@@ -33,9 +34,15 @@ const SchoolSchema: Schema<SchoolInterface> = new Schema(
     address: { type: String },
 
     schCatDesc: { type: String },
-    schLocRuralUrban: { type: Number },
+    schLocRuralUrban: { type: String},
 
-    schCategoryType: { type: String },
+    principleName:{
+      type:String,
+      required:true
+    },
+    mobileNumber:{
+      type:Number
+    }
   },
   { timestamps: true }
 );

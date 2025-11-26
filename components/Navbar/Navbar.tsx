@@ -1,4 +1,3 @@
-import React from 'react'
 import {NavigationMenu , NavigationMenuItem , NavigationMenuLink } from '@/components/ui/navigation-menu'
 import Link from 'next/link'
 import { ToggleTheme } from '../toggletheme'

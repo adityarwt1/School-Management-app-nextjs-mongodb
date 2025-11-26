@@ -1,8 +1,6 @@
 "use client"
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import React, {  useState } from 'react'
-import {Select , SelectContent , SelectGroup , SelectItem , SelectLabel , SelectTrigger , SelectValue} from "@/components/ui/select"
+import {Select , SelectContent , SelectGroup , SelectItem , SelectLabel , SelectTrigger , SelectValue } from "@/components/ui/select"
 import { Role } from '@/types/role'
 import Principle from '@/components/Register/Principle'
 
@@ -10,12 +8,13 @@ import Principle from '@/components/Register/Principle'
 
 const LogingPage = () => {
   
-  const [role, setRole] = useState<Role>();
+  const [role, setRole] = useState<Role>("");
 
  
   return (
-    <div className="flex flex-col w-full h-screen items-center justify-center gap-2">
+    <div className="flex flex-col w-full h-screen items-center justify-center gap-10 ">
       <div className="flex gap-3">
+        
         {/* selectio for the role */}
         <Select onValueChange={(val) => setRole(val as Role)}>
           <SelectTrigger className="w-64">
