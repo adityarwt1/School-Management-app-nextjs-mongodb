@@ -7,7 +7,7 @@ const Navbar = () => {
     <NavigationMenu >
         <NavigationMenuItem>
             <NavigationMenuLink asChild>
-                <Link href="/login">Login</Link>
+                <Link href="/register">Login</Link>
             </NavigationMenuLink>
         </NavigationMenuItem>
 
