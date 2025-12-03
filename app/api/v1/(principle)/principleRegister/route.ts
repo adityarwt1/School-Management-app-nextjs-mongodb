@@ -20,6 +20,13 @@ export async function POST(req: NextRequest):Promise<NextResponse<PrincipleRegis
         if(!isConnected){
             return NextResponse.json({success:false ,error:"Internal server issue." },{status:500})
         }
+        
+        // is already exist or not
+        const exist = await Principle.findOne({email})
+
+        if(exist){
+            return NextResponse.json({success:false, error:"Already register please login!"},{status:409})
+        }
 
         const hashePassoword  = await bcrypt.hash(password, 10);
 
