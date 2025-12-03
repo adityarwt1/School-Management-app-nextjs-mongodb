@@ -5,6 +5,6 @@ export interface PrincipleInfoInterface{
     contactNumber:number,
     email:string
     password:string,
-    _id:mongoose.Types.ObjectId
+    _id:mongoose.Types.ObjectId | string
     
 }
