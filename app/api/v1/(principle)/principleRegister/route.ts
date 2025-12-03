@@ -39,6 +39,7 @@ export async function POST(req: NextRequest):Promise<NextResponse<PrincipleRegis
         // tokenn
         const tokenPayload ={
             _id:principle._id,
+            role:"principle"
         }
         const token = jwt.sign(tokenPayload , process.env.JWT_SECRET as string , {
             expiresIn: 7 * 24 * 60 * 60 

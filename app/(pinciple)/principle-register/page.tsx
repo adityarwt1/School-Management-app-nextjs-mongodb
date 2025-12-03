@@ -24,9 +24,13 @@ const PrincipleRegisterPage = () => {
     }));
   };
 
-  const handleSubmit =async (e:FormEvent)=>{
+  const handleSubmit =async (e:FormEvent) :Promise<void>=>{
     e.preventDefault();
     setIsLoading(true)
+    if(!principleInfo.contactNumber || !principleInfo.email || !principleInfo.fullName || !principleInfo.password){
+      setError("Provide field first.")
+      return ;
+    }
     try {
       const response = await fetch("/api/v1/principleRegister",{
         method:"POST",
@@ -40,6 +44,9 @@ const PrincipleRegisterPage = () => {
 
       if(data.success){
         router.replace("/principledashboard" ,{scroll:true})
+      }
+      if(data.error){
+        setError(data.error)
       }
     } catch (error) {
       setError((error  as Error).message)
