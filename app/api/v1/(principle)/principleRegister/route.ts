@@ -30,7 +30,7 @@ export async function POST(req: NextRequest):Promise<NextResponse<PrincipleRegis
 
         const hashePassoword  = await bcrypt.hash(password, 10);
 
-        const principle = await Principle.create({fullName, contactNumber , email, password:hashePassoword}) as PrincipleInfoInterface
+        const principle = await Principle.create({fullName, contactNumber , email, password:hashePassoword}) 
 
         if(!principle){
             return NextResponse.json({error:"Failed to register." , success:false},{status:500})
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest):Promise<NextResponse<PrincipleRegis
             expiresIn: 7 * 24 * 60 * 60 
         });
 
-        (await cookies()).set("pricipleToken"   , token)
+        (await cookies()).set("principleToken"   , token)
 
         return NextResponse.json({ success: true , token }, { status: 200 })
     } catch (error) {

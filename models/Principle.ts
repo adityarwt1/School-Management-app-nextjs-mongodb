@@ -19,6 +19,10 @@ const PrincipleSchema :Schema<PrincipleDocument> = new Schema({
     },
     password:{
         type:String
+    },
+    profilePhoto:{
+        type:String,
+        required:true
     }
 
 },{timestamps:true})

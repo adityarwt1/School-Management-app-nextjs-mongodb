@@ -9,7 +9,6 @@ const PrincipleRegisterPage = () => {
     email: "",
     contactNumber: 0,
     password: "",
-    _id: "", // safe for frontend
   });
   const router = useRouter()
   const [error, setError] = useState<string>("")
@@ -29,6 +28,7 @@ const PrincipleRegisterPage = () => {
     setIsLoading(true)
     if(!principleInfo.contactNumber || !principleInfo.email || !principleInfo.fullName || !principleInfo.password){
       setError("Provide field first.")
+      setIsLoading(false)
       return ;
     }
     try {
