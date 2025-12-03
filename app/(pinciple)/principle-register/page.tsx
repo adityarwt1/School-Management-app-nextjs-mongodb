@@ -1,5 +1,7 @@
+"use client"
 import { PrincipleInfoInterface } from "@/interfaces/Principle/Register/requestInterface";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { FormEvent, useState } from "react";
 
 const PrincipleRegisterPage = () => {
   const [principleInfo, setPrincipleInfo] = useState<PrincipleInfoInterface>({
@@ -9,6 +11,9 @@ const PrincipleRegisterPage = () => {
     password: "",
     _id: "", // safe for frontend
   });
+  const router = useRouter()
+  const [error, setError] = useState<string>("")
+  const [isLoading , setIsLoading] = useState<boolean>(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -19,9 +24,32 @@ const PrincipleRegisterPage = () => {
     }));
   };
 
+  const handleSubmit =async (e:FormEvent)=>{
+    e.preventDefault();
+    setIsLoading(true)
+    try {
+      const response = await fetch("/api/v1/principleRegister",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({...principleInfo})
+      });
+
+      const data = await response.json()
+
+      if(data.success){
+        router.replace("/principledashboard" ,{scroll:true})
+      }
+    } catch (error) {
+      setError((error  as Error).message)
+    }finally{
+      setIsLoading(false)
+    }
+  }
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <form>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
         <input
           type="text"
           name="fullName"
@@ -49,7 +77,11 @@ const PrincipleRegisterPage = () => {
           placeholder="Enter password"
           onChange={handleChange}
         />
+        <button disabled={isLoading} type="submit">{isLoading ? "Register...":"Register"}</button>
       </form>
+      {error && (
+        <div>{error}</div>
+      )}
     </div>
   );
 };
