@@ -4,7 +4,8 @@ export  interface RegisterSchoolResponse{
         diseCode:number,
         schoolName:string,
         pinCode:number,
-        contactNumber:number
+        contactNumber:number,
+        _id:string
     }
     error?:string
 }
