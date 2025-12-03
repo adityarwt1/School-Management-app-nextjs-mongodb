@@ -6,6 +6,7 @@ import { PrincipleCookietoken } from '@/interfaces/Principle/Token/token'
 import { mongoconnect } from '@/lib/mongodb'
 import Principle from '@/models/Principle'
 import { PrincipleInfoInterface } from '@/interfaces/Principle/Register/requestInterface'
+import PrincipleInfoCard from '@/components/Principle/PrincipleInfoCard'
 
 const AdmingDashboard = async() => {
   const token = (await cookies()).get("principleToken")?.value
@@ -24,10 +25,15 @@ console.log(token)
   if(!isConnected){
     throw new Error("Internal server issue.")
   }
-  const principle = await Principle.findOne({_id:decode._id}).select("fullName  contactNumber email ").lean<PrincipleInfoInterface>()
+  const principle = await Principle.findOne({_id:decode._id}).select("fullName  contactNumber email profilePhoto").lean<PrincipleInfoInterface>()
+  if(!principle){
+    redirect('/principle-register')
+  }
   console.log(principle)
   return (
-    <div>AdmingDashboard</div>
+    <div>
+      <PrincipleInfoCard {...principle}/>
+    </div>
   )
 }
 
