@@ -1,12 +1,29 @@
 "use client";
 
+import { getSchoolInfoResponse } from "@/interfaces/School/getSchoolInfo";
 import { StudentInterface } from "@/interfaces/Student/StudentInterface";
 import { convertToBase64 } from "@/services/Image/ConvertToBase64";
+import { getSchoolInfoByDiseCode } from "@/services/School/getSchoolBydiseCode";
+import { registerStudent } from "@/services/Student/registerStudent";
+import mongoose from "mongoose";
 import Image from "next/image";
-import React, { ChangeEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 const StudentRegister = () => {
+    const router = useRouter()
     const [imageLink, setImage] = useState<string>("")
+    const [isLoading , setIsLoading] = useState<boolean>(false)
+    const [isImageLoading, setImageLoading] = useState<boolean>(false)
+    const [error, setError ] = useState<string>("")
+    const [schoolError, setSchoolError] = useState<string>("")
+    const [schoolInfo, setSchoolInfo] = useState<getSchoolInfoResponse>({
+        success:false,
+        school:{
+            _id:"",
+            schoolName:""
+        }
+    })
   const [studentInfo, setStudentInfo] = useState<StudentInterface>({
     fullName: "",
     diseCode: 0,
@@ -50,24 +67,92 @@ const StudentRegister = () => {
   };
 
     const handleImageChange = async (e:React.ChangeEvent<HTMLInputElement>)=>{
-        const file = e.target.files?.[0]
+        setImageLoading(true)
+        try {
+          const file = e.target.files?.[0];
 
-        const link = await convertToBase64(file as File);
+          const link = await convertToBase64(file as File);
 
-        if(link){
-            setImage(link as string)
-            setStudentInfo(prev=> ({
-                ...prev,
-                profilePicture:link
-            }))
+          if (link) {
+            setImage(link as string);
+            setStudentInfo((prev) => ({
+              ...prev,
+              profilePicture: link,
+            }));
+          }
+        } catch (error) {
+            console.log(error)
+        }finally{
+            setImageLoading(false)
         }
 
     }
+useEffect(() => {
+  if (String(studentInfo.diseCode).length < 5) return;
+
+  const timer = setTimeout(() => {
+    (async () => {
+      const response = await getSchoolInfoByDiseCode(studentInfo.diseCode);
+
+      if (response.error) {
+        setSchoolError(response.error);
+        return;
+      }
+
+      if (response.success) {
+
+        setStudentInfo((prev) => ({
+          ...prev,
+          schoolId: response.school?._id as mongoose.Types.ObjectId,
+        }));
+
+        setSchoolInfo(response);
+      }
+    })();
+  }, 700); // debounce delay (recommended 500–800ms)
+
+  // Cleanup → cancel previous timer when DISE code changes
+  return () => clearTimeout(timer);
+}, [studentInfo.diseCode]);
+
+const handleSubmit = async (e:FormEvent<HTMLFormElement>) :Promise<void>=>{
+    e.preventDefault()
+    setIsLoading(true)
+    try {
+        const response = await registerStudent({
+fullName:studentInfo.fullName,
+address:studentInfo.address,
+adharCardNumber:studentInfo.adharCardNumber,
+contactNumber:studentInfo.contactNumber,
+currentClass:studentInfo.currentClass,
+diseCode:studentInfo.diseCode,
+fatherName:studentInfo.fatherName,
+motherName:studentInfo.motherName,
+password:studentInfo.password,
+profilePicture:studentInfo.profilePicture,
+ssmId:studentInfo.ssmId,
+schoolId:studentInfo.schoolId
+        })
+
+        if(response.error){
+            setError(response.error)
+        }else if(response.success){
+            localStorage.setItem("smaToken" , response.token as string)
+router.replace("/studentDashBoard")
+        }else{
+            setError("Somethign wen wrong!")
+        }
+    } catch (error) {
+        console.log(error)
+    }finally{
+        setIsLoading(false)
+    }
+}
   return (
     <div className="p-6 max-w-xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">Student Registration</h2>
 
-      <form className="flex flex-col gap-3">
+      <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         {/* Full Name */}
         <label htmlFor="fullName">Full Name</label>
         <input
@@ -88,8 +173,10 @@ const StudentRegister = () => {
           placeholder="Enter DISE code"
           onChange={handleInputChange}
           className="border p-2 rounded"
+        //   disabled={schoolInfo.success}
         />
-
+        {schoolInfo.success && <div className="text-green-400">{schoolInfo.school?.schoolName}</div>}
+        {schoolError && <div>{schoolError}</div>}
         {/* Class Selection */}
         <label htmlFor="currentClass">Current Class</label>
         <select
@@ -176,6 +263,7 @@ const StudentRegister = () => {
         {/* Profile Picture URL */}
         <label htmlFor="profilePicture">Profile Picture URL</label>
         <input
+        disabled={isImageLoading}
           id="profilePicture"
           name="profilePicture"
           type="file"
@@ -193,10 +281,18 @@ const StudentRegister = () => {
           onChange={handleInputChange}
           className="border p-2 rounded"
         />
+        <button type="submit" disabled={isLoading}>
+          {isLoading?"Registering...":"Register"}
+        </button>
       </form>
 
       {/* LIVE PREVIEW FOR DEBUGGING */}
-      { imageLink && <Image src={imageLink} width={50} height={50} alt="Profile phone"/>}
+      {imageLink && (
+        <Image src={imageLink} width={50} height={50} alt="Profile phone" />
+      )}
+      {error && (
+        <div>{error}</div>
+      )}
       <div className="mt-5  p-3 rounded">
         <h3 className="font-semibold mb-1">Live Student Data:</h3>
         <pre className="text-sm">{JSON.stringify(studentInfo, null, 2)}</pre>
