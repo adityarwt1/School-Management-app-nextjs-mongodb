@@ -1,21 +1,21 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import jwt from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { PrincipleCookietoken } from '@/interfaces/Principle/Token/token'
 import { mongoconnect } from '@/lib/mongodb'
 import Principle from '@/models/Principle'
 import { PrincipleInfoInterface } from '@/interfaces/Principle/Register/requestInterface'
 import PrincipleInfoCard from '@/components/Principle/PrincipleInfoCard'
+import SchoolCard from '@/components/School/SchoolCard'
+import { TokenInterface } from '@/interfaces/Token/tokenInterface'
+import SchoolCardSkeleton from '@/components/Skeleton/School/SchoolCardSkeleton'
 
 const AdmingDashboard = async() => {
   const token = (await cookies()).get("smaToken")?.value
-console.log(token)
   if(!token){
     redirect('/login')
   }
-  const decode  = jwt.verify(token, process.env.JWT_SECRET as string) as PrincipleCookietoken
-  console.log(decode)
+  const decode  = jwt.verify(token, process.env.JWT_SECRET as string) as TokenInterface
   if(decode.role !=="principle"){
     redirect('/')
   }
@@ -26,16 +26,19 @@ console.log(token)
     throw new Error("Internal server issue.")
   }
   const principle = await Principle.findOne({_id:decode._id}).select("fullName  contactNumber email profilePhoto").lean<PrincipleInfoInterface>()
-  
+
   if(!principle){
     redirect('/principle-register')
   }
-  console.log(principle)
   return (
-    <div>
-      <PrincipleInfoCard {...principle}/>
+    <div className="flex flex-col gap-3">
+      <PrincipleInfoCard {...principle} />
+
+      <Suspense fallback={<SchoolCardSkeleton/>} >
+        <SchoolCard />
+      </Suspense>
     </div>
-  )
+  );
 }
 
 export default AdmingDashboard

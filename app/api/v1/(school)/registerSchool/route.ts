@@ -2,12 +2,13 @@ import { RequestSchoolRegister } from "@/interfaces/School/registerSchoolRequest
 import { RegisterSchoolResponse } from "@/interfaces/School/registerSchoolResponse";
 import { mongoconnect } from "@/lib/mongodb";
 import School from "@/models/School";
+import { getUserId } from "@/services/userid/getUserId";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest): Promise<NextResponse<RegisterSchoolResponse>> {
     try {
         // start here
-        const {diseCode, schoolName, pinCode, contactNumber }:RequestSchoolRegister = await req.json()
+        const {diseCode, schoolName, pinCode, contactNumber , email ,from, to}:RequestSchoolRegister = await req.json()
 
         if(!diseCode || !schoolName || !pinCode || !contactNumber){
             return NextResponse.json(
@@ -27,7 +28,17 @@ export async function POST(req: NextRequest): Promise<NextResponse<RegisterSchoo
         if(existingSchool){
             return NextResponse.json({error:"School already exists!", success:false},{status:409})
         }
-        const school = await School.create({diseCode, schoolName, pinCode, contactNumber })
+        const currentId = await getUserId()
+        const school = await School.create({
+          diseCode,
+          schoolName,
+          pinCode,
+          contactNumber,
+          principleId:currentId,
+          email,
+          from,
+          to
+        });
 
         if(!school){
             return NextResponse.json({error:"Failed to add School" , success:false},{status:500})
