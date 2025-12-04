@@ -22,7 +22,7 @@ const PrincipleSchema :Schema<PrincipleDocument> = new Schema({
     },
     profilePhoto:{
         type:String,
-        required:true
+        // required:true
     }
 
 },{timestamps:true})

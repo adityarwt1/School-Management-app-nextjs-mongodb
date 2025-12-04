@@ -45,7 +45,7 @@ export async function POST(req: NextRequest):Promise<NextResponse<PrincipleRegis
             expiresIn: 7 * 24 * 60 * 60 
         });
 
-        (await cookies()).set("principleToken"   , token)
+        (await cookies()).set("smaToken"   , token)
 
         return NextResponse.json({ success: true , token }, { status: 200 })
     } catch (error) {

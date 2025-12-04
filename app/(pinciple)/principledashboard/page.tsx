@@ -9,7 +9,7 @@ import { PrincipleInfoInterface } from '@/interfaces/Principle/Register/requestI
 import PrincipleInfoCard from '@/components/Principle/PrincipleInfoCard'
 
 const AdmingDashboard = async() => {
-  const token = (await cookies()).get("principleToken")?.value
+  const token = (await cookies()).get("smaToken")?.value
 console.log(token)
   if(!token){
     redirect('/login')
@@ -26,6 +26,7 @@ console.log(token)
     throw new Error("Internal server issue.")
   }
   const principle = await Principle.findOne({_id:decode._id}).select("fullName  contactNumber email profilePhoto").lean<PrincipleInfoInterface>()
+  
   if(!principle){
     redirect('/principle-register')
   }
