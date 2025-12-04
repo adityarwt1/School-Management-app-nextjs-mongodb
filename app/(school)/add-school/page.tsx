@@ -1,6 +1,8 @@
 "use client"
 import { SchoolInterface } from "@/interfaces/School/SchoolInterface";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import { addSchool } from "@/services/School/addSchool";
+import { useRouter } from "next/navigation";
+import React, { ChangeEvent,  useState } from "react";
 
 const SchoolAdd = () => {
   const [schoolInfo, setSchoolInfo] = useState<SchoolInterface>({
@@ -13,7 +15,9 @@ const SchoolAdd = () => {
     to: 12,
   });
 
+  const router = useRouter()
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string>("")
   // LKG → UKG → 1 to 12
   const classes = [
     "LKG",
@@ -41,10 +45,18 @@ const SchoolAdd = () => {
     }));
   };
 
-    const handleSubmit = async (e:FormEvent<HTMLFormElement>)=>{
+    const handleSubmit = async (e:React.FormEvent<HTMLFormElement>):Promise<void>=>{
+      e.preventDefault()
         setIsLoading(true)
        try {
-            
+            const response = await addSchool({contactNumber:schoolInfo.contactNumber , diseCode:schoolInfo.diseCode , email:schoolInfo.email , from:schoolInfo.from , pinCode:schoolInfo.pinCode,schoolName:schoolInfo.schoolName , to:schoolInfo.to})
+            if(response.error){
+              setError(response.error)
+              return 
+            }
+            if(response.success){
+              router.replace("/principledashboard")
+            }
        } catch (error) {
         console.log(error as Error)
        }finally{
@@ -96,7 +108,7 @@ const SchoolAdd = () => {
 
         <label htmlFor="email">School or Principal Email</label>
         <input
-          type="text"
+          type="email"
           placeholder="Enter email"
           name="email"
           id="email"
@@ -125,6 +137,9 @@ const SchoolAdd = () => {
        
         <button type="submit" disabled={isLoading} >{isLoading ?"Adding...":"Add"}</button>
       </form>
+      {error && (
+        <div>{error}</div>
+      )}
     </div>
   );
 };

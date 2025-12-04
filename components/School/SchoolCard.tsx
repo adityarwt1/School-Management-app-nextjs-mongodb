@@ -20,13 +20,19 @@ const SchoolCard = async() => {
     console.log("compeonet is servwer or not")
   return (
     <div>
-        {school ? (
-            <div>School Info</div>
-        ):(
-            <Link href="/add-school">Add Your School here</Link>
-        )}
+      {school ? (
+        <>
+          <div>{school.schoolName}</div>
+          <div>{school.diseCode}</div>
+          <div>{school.email}</div>
+          <div>{school.from}-{school.to}</div>
+          <div>{school.pinCode}</div>
+        </>
+      ) : (
+        <Link href="/add-school">Add Your School here</Link>
+      )}
     </div>
-  )
+  );
 }
 
 export default SchoolCard
