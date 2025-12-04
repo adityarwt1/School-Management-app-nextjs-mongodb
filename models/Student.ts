@@ -48,6 +48,10 @@ const StudentSchema:Schema<StudentDocument> = new Schema({
     schoolId:{
         type:Schema.Types.ObjectId,
         required:true
+    },
+    password:{
+        type:String,
+        required:true
     }
 
 },{timestamps:true})

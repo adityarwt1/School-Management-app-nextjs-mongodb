@@ -21,7 +21,7 @@ export async function POST(req: NextRequest):Promise<NextResponse<ResponseStuden
             return NextResponse.json({success:false , error:"Internal server issue."},{status:500})
         }
 
-        const exist = await Student.findOne({ssmId}).lean();
+        const exist = await Student.findOne({ssmId , adharCardNumber }).lean();
 
         if(exist){
             return NextResponse.json({error:"Student already exist!", success:false},{status:409})
