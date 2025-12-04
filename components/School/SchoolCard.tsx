@@ -4,6 +4,7 @@ import { getTokenInfo } from '@/services/Token/getToken'
 import School from '@/models/School'
 import { SchoolInterface } from '@/interfaces/School/SchoolInterface'
 import Link from 'next/link'
+import Student from '@/models/Student'
 
 
 const SchoolCard = async() => {
@@ -14,10 +15,10 @@ const SchoolCard = async() => {
     if(!isConnected){
         throw new Error("Failed to Connect Database");
     }
-    const school = await School.findOne({principleId:tokenInfo._id}).lean<SchoolInterface>()
-    
-    console.log("School info" , school)
-    console.log("compeonet is servwer or not")
+    const school = await School.findOne({principleId:tokenInfo._id}).lean<SchoolInterface >()
+
+    const totalStudent = await Student.countDocuments({scoolId:school?.diseCode})
+
   return (
     <div>
       {school ? (
@@ -27,6 +28,7 @@ const SchoolCard = async() => {
           <div>{school.email}</div>
           <div>{school.from}-{school.to}</div>
           <div>{school.pinCode}</div>
+          <div>TotalStudent: {totalStudent}</div>
         </>
       ) : (
         <Link href="/add-school">Add Your School here</Link>
