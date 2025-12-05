@@ -7,5 +7,5 @@ export interface TeacherInterface{
     password:string
     schoolId:mongoose.Types.ObjectId | string
     diseCode:number   
-    profilePicture:string | ArrayBuffer 
+    profilePicture:string | ArrayBuffer  | null
 }
