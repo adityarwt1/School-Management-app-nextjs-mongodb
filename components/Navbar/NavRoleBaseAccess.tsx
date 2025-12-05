@@ -7,10 +7,22 @@ interface RoleInterface{
 }
 const NavRoleBaseAccess:React.FC<RoleInterface> = ({role}) => {
   return (
-    <div className='flex '>
-        <Link href={role == "principle" ? "/principledashboard" :role== "teacher" ? "/teacherDashboard" :"/studentDashBoard"}>DashBoard</Link>
+    <div className="flex ">
+      { role !== "guest" &&
+        <Link
+          href={
+            role == "principle"
+              ? "/principledashboard"
+              : role == "teacher"
+              ? "/teacherDashboard"
+              : "/studentDashBoard"
+          }
+        >
+          DashBoard
+        </Link>
+      }
     </div>
-  )
+  );
 }
 
 export default NavRoleBaseAccess

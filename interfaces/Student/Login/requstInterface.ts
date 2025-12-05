@@ -1,4 +1,4 @@
-export interface StudentLogin{
+export interface StudentLoginRequest{
     ssmId:number
     password:string
 }
