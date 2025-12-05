@@ -1,1 +1,1 @@
-export type Role ="principle" |"student"|"teacher";
+export type Role ="principle" |"student"|"teacher" | "guest";
