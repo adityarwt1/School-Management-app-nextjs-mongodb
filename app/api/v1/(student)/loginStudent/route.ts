@@ -10,7 +10,6 @@ export async function POST(req: NextRequest):Promise<NextResponse<StudentLoginRe
     try {
         // start here
         const {ssmId, password}:StudentLoginRequest = await req.json()
-
         if(!ssmId || !password){
             return NextResponse.json({error:'Fields not provided!' , success:false},{status: 400})
         }
@@ -42,7 +41,7 @@ export async function POST(req: NextRequest):Promise<NextResponse<StudentLoginRe
 
         return NextResponse.json({ success: true , token}, { status: 200 })
     } catch (error) {
-        console.log(error)
+        console.log((error as Error).message)
         return NextResponse.json({ success:false,error: "Internal server issue." }, { status: 500 })
     }
 }
