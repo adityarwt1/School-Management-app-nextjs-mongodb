@@ -96,9 +96,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-        <div className="isolate"> 
-          {/* <NavBar /> */}
-          <NavbarV2/>
+        <div className="w-full"> 
+          <NavBar />
+          {/* <NavbarV2/> */}
           {children}
         </div>
       </body>
