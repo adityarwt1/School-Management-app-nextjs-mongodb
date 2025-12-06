@@ -1,8 +1,12 @@
 import React from 'react'
+import StudentLogin from '../components/StudentLogin'
 
 const Page = () => {
   return (
-    <div>NEXT JS</div>
+    <div>NEXT JS
+
+        <StudentLogin/>
+    </div>
   )
 }
 
