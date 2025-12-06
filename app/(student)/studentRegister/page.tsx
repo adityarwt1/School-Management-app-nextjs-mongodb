@@ -8,7 +8,13 @@ import { registerStudent } from "@/services/Student/registerStudent";
 import mongoose from "mongoose";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  Suspense,
+  useEffect,
+  useState,
+} from "react";
 
 const StudentRegister = () => {
   const router = useRouter();
@@ -303,4 +309,12 @@ const StudentRegister = () => {
   );
 };
 
-export default StudentRegister;
+const StudentRegisterPage = () => {
+  return (
+    <Suspense>
+      <StudentRegister />
+    </Suspense>
+  );
+};
+
+export default StudentRegisterPage;

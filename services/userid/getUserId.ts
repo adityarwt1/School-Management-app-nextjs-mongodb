@@ -1,24 +1,28 @@
-"use server"
+"use server";
 
-import { TokenInterface } from '@/interfaces/Token/tokenInterface'
-import jwt from 'jsonwebtoken'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { TokenInterface } from "@/interfaces/Token/tokenInterface";
+import jwt from "jsonwebtoken";
+import mongoose, { Schema } from "mongoose";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
+export async function getUserId(): Promise<
+  string | mongoose.Types.ObjectId | Schema.Types.ObjectId
+> {
+  const token = (await cookies()).get("smaToken")?.value;
 
-export async function getUserId():Promise<string>{
+  if (!token) {
+    redirect("/login");
+  }
 
-    const token = (await cookies()).get("smaToken")?.value
+  const decoded = jwt.verify(
+    token,
+    process.env.JWT_SECRET as string
+  ) as TokenInterface;
 
-    if(!token){
-        redirect("/login")
-    }
+  if (!decoded) {
+    redirect("/login");
+  }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as TokenInterface
-
-    if(!decoded){
-        redirect("/login")
-    }
-
-    return decoded._id;
+  return decoded._id;
 }

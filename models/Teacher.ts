@@ -1,45 +1,48 @@
 import { TeacherInterface } from "@/interfaces/Teacher/TeacherInterface";
 import mongoose, { Document, Schema } from "mongoose";
 
-interface TeacherDocument extends TeacherInterface, Document{}
+interface TeacherDocument extends TeacherInterface {}
 
+const TeacherSchema: Schema<TeacherDocument> = new Schema(
+  {
+    fullName: {
+      type: String,
+      required: true,
+    },
+    contactNumber: {
+      type: Number,
+      required: true,
+    },
+    bcCode: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    schoolId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
+    diseCode: {
+      type: Number,
+      required: true,
+    },
+    profilePicture: {
+      type: String,
+      default: "/images/profile.png",
+    },
+    classTeacher: {
+      type: Number,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-const TeacherSchema:Schema<TeacherDocument> = new Schema({
-    fullName:{
-        type:String,
-        required:true,
-    },
-    contactNumber:{
-        type:Number,
-        required:true
-    },
-    bcCode:{
-        type:String,
-        required:true,
-    },
-    password:{
-        type:String,
-        required:true
-    },
-    schoolId:{
-        type:Schema.Types.ObjectId,
-        required:true,
-    },
-    diseCode:{
-        type:Number,
-        required:true
-    },
-    profilePicture:{
-        type:String,
-        default:"/images/profile.png"
-    },
-    classTeacher:{
-        type:Number,
-        required:true
-    }
+const Teacher =
+  mongoose.models.Teacher ||
+  mongoose.model<TeacherDocument>("Teacher", TeacherSchema);
 
-},{timestamps:true})
-
-const Teacher = mongoose.models.Teacher || mongoose.model<TeacherDocument>("Teacher" , TeacherSchema)
-
-export default Teacher
+export default Teacher;
