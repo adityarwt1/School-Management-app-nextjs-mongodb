@@ -3,6 +3,7 @@ import { mongoconnect } from '@/lib/mongodb'
 import Student from '@/models/Student'
 import Image from 'next/image'
 import React from 'react'
+import SendInviteButton from './SendInviteButton'
 
 
 const TeacherInfoCard:React.FC<TeacherInterface> =async ({bcCode , classTeacher  , contactNumber, diseCode, fullName, profilePicture }) => {
@@ -18,7 +19,7 @@ const TeacherInfoCard:React.FC<TeacherInterface> =async ({bcCode , classTeacher 
         <div>Contact Number: {contactNumber}</div>
         <div>Dise Code: {diseCode}</div>
         <div>Total Studen Your Class: {student}</div>
-    
+        <SendInviteButton currentClass={classTeacher } diseCode={diseCode} key={bcCode}/>
     </div>
   )
 }
