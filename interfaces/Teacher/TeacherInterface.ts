@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 
 export interface TeacherInterface{
+    _id:mongoose.Types.ObjectId | string
     fullName:string
     contactNumber:number
     bcCode:string
