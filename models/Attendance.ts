@@ -13,12 +13,9 @@ const AttendanceSchema:Schema<AttendanceDocument>= new Schema({
         type:Boolean,
     },
 
-    date:{
-        type:Date,
-        required:true
-    },
+   
     currentYear:{
-        type:Date,
+        type:String,
         required:true
     },
 
