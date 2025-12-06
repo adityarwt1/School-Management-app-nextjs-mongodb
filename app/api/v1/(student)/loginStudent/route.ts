@@ -5,6 +5,8 @@ import Student from "@/models/Student";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt  from "bcryptjs";
 import jwt from "jsonwebtoken"
+import { cookies } from "next/headers";
+import { TokenInterface } from "@/interfaces/Token/tokenInterface";
 
 export async function POST(req: NextRequest):Promise<NextResponse<StudentLoginResponse>> {
     try {
@@ -32,13 +34,14 @@ export async function POST(req: NextRequest):Promise<NextResponse<StudentLoginRe
             return NextResponse.json({success:false, error:"Wrong Password."},{status:400})
         }
 
-        const toknePayload = {
+        const toknePayload:TokenInterface = {
             _id:student._id,
             role:"student"
         }
 
-        const token = jwt.sign(toknePayload , process.env.JWT_SECRET as string)
+        const token = jwt.sign(toknePayload , process.env.JWT_SECRET as string);
 
+        (await cookies()).set("smaToken" , token)
         return NextResponse.json({ success: true , token}, { status: 200 })
     } catch (error) {
         console.log((error as Error).message)
