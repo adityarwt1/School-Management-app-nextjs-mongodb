@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
 export interface TeacherInterface{
-    _id:mongoose.Types.ObjectId | string
+    // _id:mongoose.Types.ObjectId | string 
     fullName:string
     contactNumber:number
     bcCode:string
@@ -9,5 +9,5 @@ export interface TeacherInterface{
     schoolId:mongoose.Types.ObjectId | string
     diseCode:number   
     profilePicture:string | ArrayBuffer  | null,
-    classTeacher:string
+    classTeacher:number
 }

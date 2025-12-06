@@ -34,7 +34,7 @@ const TeacherSchema:Schema<TeacherDocument> = new Schema({
         default:"/images/profile.png"
     },
     classTeacher:{
-        type:String,
+        type:Number,
         required:true
     }
 
