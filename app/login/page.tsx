@@ -6,7 +6,7 @@ import { Role } from '@/types/role'
 import React, {  ChangeEvent,useState } from 'react'
 
 const LoginPage = () => {
-  const [role , setRole] = useState<Role>("guest")
+  const [role , setRole] = useState<Role>("principle")
 
   const handleRoleSelect = (e:ChangeEvent<HTMLSelectElement>)=>{
     const role = e.target.value
@@ -14,11 +14,11 @@ const LoginPage = () => {
   }
   console.log(role)
  
-  return (
+  return ( 
     <div className='w-full h-screen justify-center items-center'>
       <div>
-        <select name="role" onChange={handleRoleSelect}>
-          <option value="principle">Principle</option>
+        <select name="role" onChange={handleRoleSelect} className='text-black bg-white'>
+          <option value="principle" defaultChecked>Principle</option>
           <option value="teacher">Teacher</option>
           <option value="student">Student</option>
         </select>
