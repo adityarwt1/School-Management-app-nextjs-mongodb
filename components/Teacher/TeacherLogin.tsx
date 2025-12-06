@@ -37,7 +37,7 @@ const TeacherLogin = () => {
         } catch (error) {
             setError((error as Error).message)
         }finally{
-            setIsloading(true)
+            setIsloading(false)
         }
     }
   return (
@@ -50,7 +50,7 @@ const TeacherLogin = () => {
             <button type='submit' className='w-full bg-[#e0e0e0] text-black rounded-md py-1'>{isLoading ?"Loading...":"Login"}</button>
         </form>
         {errror && (
-            <div className='bg-red-300 text-black'>{errror}</div>
+            <div className='bg-red-300 text-black mt-5 p-2 rounded-lg'>{errror}</div>
         )}
     </div>
   )
