@@ -32,6 +32,8 @@ const AdmingDashboard = async() => {
       <Suspense fallback={<SchoolCardSkeleton/>} >
         <SchoolCard />
       </Suspense>
+
+      
     </div>
   );
 }

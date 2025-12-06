@@ -5,6 +5,7 @@ import School from '@/models/School'
 import { SchoolInterface } from '@/interfaces/School/SchoolInterface'
 import Link from 'next/link'
 import Student from '@/models/Student'
+import Teacher from '@/models/Teacher'
 
 
 
@@ -19,6 +20,7 @@ const SchoolCard :React.FC= async() => {
     const school = await School.findOne({principleId:tokenInfo._id}).lean<SchoolInterface >()
 
     const totalStudent = await Student.countDocuments({diseCode:school?.diseCode})
+    const totalTeacher = await Teacher.countDocuments({diseCode:school?.diseCode})
 
   return (
     <div>
@@ -29,7 +31,8 @@ const SchoolCard :React.FC= async() => {
           <div>{school.email}</div>
           <div>{school.from}-{school.to}</div>
           <div>{school.pinCode}</div>
-          <div>TotalStudent: {totalStudent}</div>
+          <div>Total Student: {totalStudent}</div>
+          <div>Total Teacher: {totalTeacher}</div>
         </>
       ) : (
         <Link href="/add-school">Add Your School here</Link>
