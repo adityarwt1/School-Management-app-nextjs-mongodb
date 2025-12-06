@@ -1,11 +1,14 @@
 import { TeacherLoginRequest } from '@/interfaces/Teacher/login/TeacherLoginRequest'
-import React, { ChangeEvent, FormEvent, use, useState } from 'react'
+import { loginTeacher } from '@/services/Teacher/Login/TeacherLoing'
+import { useRouter } from 'next/navigation'
+import React, { ChangeEvent, FormEvent,  useState } from 'react'
 
 const TeacherLogin = () => {
     const [teacherInfo, setTeacherInfo] = useState<TeacherLoginRequest>({
         bcCode:"",
         password:""
     })
+    const router = useRouter()
     const [errror, setError] = useState<string>()
     const [isLoading, setIsloading] = useState<boolean>(false)
 
@@ -22,7 +25,15 @@ const TeacherLogin = () => {
         e.preventDefault()
         setIsloading(true)
         try {
-            // const response = await 
+            const response = await loginTeacher({  bcCode:teacherInfo.bcCode,password:teacherInfo.password})
+
+            if(response.success){
+                router.replace("/teacherDashboard")
+            }else if(response.error){
+                setError(response.error)
+            }else{
+                setError("Something went Wrong!")
+            }
         } catch (error) {
             setError((error as Error).message)
         }finally{
