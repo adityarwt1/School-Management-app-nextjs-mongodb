@@ -7,7 +7,8 @@ import Link from 'next/link'
 import Student from '@/models/Student'
 
 
-const SchoolCard = async() => {
+
+const SchoolCard :React.FC= async() => {
     const tokenInfo = await getTokenInfo()
 
     const isConnected = await mongoconnect()
@@ -17,7 +18,7 @@ const SchoolCard = async() => {
     }
     const school = await School.findOne({principleId:tokenInfo._id}).lean<SchoolInterface >()
 
-    const totalStudent = await Student.countDocuments({scoolId:school?.diseCode})
+    const totalStudent = await Student.countDocuments({diseCode:school?.diseCode})
 
   return (
     <div>

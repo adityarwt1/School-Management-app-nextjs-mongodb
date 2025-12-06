@@ -1,21 +1,16 @@
 import React, { Suspense } from 'react'
-import jwt from 'jsonwebtoken'
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { mongoconnect } from '@/lib/mongodb'
 import Principle from '@/models/Principle'
 import { PrincipleInfoInterface } from '@/interfaces/Principle/Register/requestInterface'
 import PrincipleInfoCard from '@/components/Principle/PrincipleInfoCard'
 import SchoolCard from '@/components/School/SchoolCard'
-import { TokenInterface } from '@/interfaces/Token/tokenInterface'
 import SchoolCardSkeleton from '@/components/Skeleton/School/SchoolCardSkeleton'
+import { getTokenInfo } from '@/services/Token/getToken'
 
 const AdmingDashboard = async() => {
-  const token = (await cookies()).get("smaToken")?.value
-  if(!token){
-    redirect('/login')
-  }
-  const decode  = jwt.verify(token, process.env.JWT_SECRET as string) as TokenInterface
+
+  const decode  =await getTokenInfo()
   if(decode.role !=="principle"){
     redirect('/')
   }
