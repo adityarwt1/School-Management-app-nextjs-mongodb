@@ -1,7 +1,9 @@
 import mongoose from "mongoose"
 
-export interface TeacherInterface{
-    // _id:mongoose.Types.ObjectId | string 
+interface MongoId{
+    _id:mongoose.Types.ObjectId | string 
+}
+export interface TeacherInterface extends MongoId {
     fullName:string
     contactNumber:number
     bcCode:string

@@ -22,7 +22,7 @@ export async function POST(req: NextRequest):Promise<NextResponse<TeacherLoginRe
             return NextResponse.json({success:false, error:"Internal server issue."},{status:500})
         }
 
-        const teacher = await Teacher.findOne({bcCode}).lean<TeacherInterface>();
+        const teacher = await Teacher.findOne({bcCode}).lean<TeacherInterface >();
 
         if(!teacher){
             return NextResponse.json({success:false, error:"Teacher record not found!"},{status:404})
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest):Promise<NextResponse<TeacherLoginRe
             return NextResponse.json({success:false, error:"Wrong password!"},{status:400})
         }
 
-        const tokenPayload:TokenInterface  = {
+        const tokenPayload:TokenInterface   = {
             _id:teacher._id ,
              role:"teacher"
         } 
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest):Promise<NextResponse<TeacherLoginRe
             expiresIn:7 * 24  * 60 * 60
         }) ;
 
-        (await cookies()).set("smaTokon" , token)
+        (await cookies()).set("smaToken" , token)
 
         return NextResponse.json({ success: true , token }, { status: 200 })
     } catch (error) {
