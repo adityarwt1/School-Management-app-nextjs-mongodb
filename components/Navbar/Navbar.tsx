@@ -6,7 +6,7 @@ import {NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuLi
 const NavBar =async () => {
   const role = await getRole()
   return (
-    <div className="w-full bg--400 flex justify-between px-4">
+    <div className="w-full bg--400 flex justify-between px-4 border-b shadow-2xl">
       <NavigationMenu className="flex w-full p-4 justify-between items-center ">
         <NavigationMenuList>
           <NavigationMenuItem>
