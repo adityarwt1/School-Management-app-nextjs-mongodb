@@ -5,13 +5,15 @@ interface SendInviteProps{
     diseCode:number
     currentClass:number
 }
-const SendInviteButton:React.FC<SendInviteProps> = ({currentClass, diseCode}) => {
+const SendInviteButton:React.FC<SendInviteProps> = ({ diseCode}) => {
     const [isCopied, setIsCopied] = useState<boolean>(false)
     const [error,setError] = useState<string>()
 
     const handleCopy = async ()=>{
         try {
-            await navigator.clipboard.writeText(`${window.origin}/register?role=student&diseCode=${diseCode}&currentClass=${currentClass}`)
+            await navigator.clipboard.writeText(
+              `${window.origin}/studentRegister?diseCode=${diseCode}`
+            );
             setIsCopied(true)
         } catch (error) {
             console.log((error as Error).message)

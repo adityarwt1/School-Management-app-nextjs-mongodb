@@ -7,23 +7,27 @@ import { getSchoolInfoByDiseCode } from "@/services/School/getSchoolBydiseCode";
 import { registerStudent } from "@/services/Student/registerStudent";
 import mongoose from "mongoose";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 const StudentRegister = () => {
-    const router = useRouter()
-    const [imageLink, setImage] = useState<string>("")
-    const [isLoading , setIsLoading] = useState<boolean>(false)
-    const [isImageLoading, setImageLoading] = useState<boolean>(false)
-    const [error, setError ] = useState<string>("")
-    const [schoolError, setSchoolError] = useState<string>("")
-    const [schoolInfo, setSchoolInfo] = useState<getSchoolInfoResponse>({
-        success:false,
-        school:{
-            _id:"",
-            schoolName:""
-        }
-    })
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [imageLink, setImage] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isImageLoading, setImageLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [schoolError, setSchoolError] = useState<string>("");
+
+  const [schoolInfo, setSchoolInfo] = useState<getSchoolInfoResponse>({
+    success: false,
+    school: {
+      _id: "",
+      schoolName: "",
+    },
+  });
+
   const [studentInfo, setStudentInfo] = useState<StudentInterface>({
     fullName: "",
     diseCode: 0,
@@ -36,29 +40,41 @@ const StudentRegister = () => {
     address: "",
     profilePicture: "",
     password: "",
-    // schoolId: optional (can add later)
   });
 
-  // LKG → UKG → Class 1 → Class 12
+  // ---------------------------------------------
+  // STEP 1: Load default values from Search Params
+  // ---------------------------------------------
+  useEffect(() => {
+    const dise = searchParams.get("diseCode");
+    const cls = searchParams.get("currentClass");
+
+    setStudentInfo((prev) => ({
+      ...prev,
+      diseCode: dise ? Number(dise) : prev.diseCode,
+      currentClass: cls ? Number(cls) : prev.currentClass,
+    }));
+  }, []);
+
+  // Class options
   const classes = [
     "LKG",
     "UKG",
-    ...Array.from({ length: 12 }, (_, i) => i+1),
+    ...Array.from({ length: 12 }, (_, i) => i + 1),
   ];
 
-  // Generic input handler
+  // Generic handler
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
 
-    // Numeric fields must be converted
     const numericFields = [
       "diseCode",
       "contactNumber",
       "adharCardNumber",
       "ssmId",
-      "currentClass"
+      "currentClass",
     ];
 
     setStudentInfo((prev) => ({
@@ -67,123 +83,120 @@ const StudentRegister = () => {
     }));
   };
 
-    const handleImageChange = async (e:React.ChangeEvent<HTMLInputElement>)=>{
-        setImageLoading(true)
-        try {
-          const file = e.target.files?.[0];
+  // IMAGE UPLOAD
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setImageLoading(true);
+    try {
+      const file = e.target.files?.[0];
+      const link = await convertToBase64(file as File);
 
-          const link = await convertToBase64(file as File);
-
-          if (link) {
-            setImage(link as string);
-            setStudentInfo((prev) => ({
-              ...prev,
-              profilePicture: link,
-            }));
-          }
-        } catch (error) {
-            console.log(error)
-        }finally{
-            setImageLoading(false)
-        }
-
-    }
-useEffect(() => {
-  if (String(studentInfo.diseCode).length < 5) return;
-
-  const timer = setTimeout(() => {
-    (async () => {
-      const response = await getSchoolInfoByDiseCode(studentInfo.diseCode);
-
-      if (response.error) {
-        setSchoolError(response.error);
-        return;
-      }
-
-      if (response.success) {
-
+      if (link) {
+        setImage(link as string);
         setStudentInfo((prev) => ({
           ...prev,
-          schoolId: response.school?._id as mongoose.Types.ObjectId,
+          profilePicture: link,
         }));
-
-        setSchoolInfo(response);
       }
-    })();
-  }, 700); // debounce delay (recommended 500–800ms)
-
-  // Cleanup → cancel previous timer when DISE code changes
-  return () => clearTimeout(timer);
-}, [studentInfo.diseCode]);
-
-const handleSubmit = async (e:FormEvent<HTMLFormElement>) :Promise<void>=>{
-    e.preventDefault()
-    setIsLoading(true)
-    try {
-        const response = await registerStudent({
-fullName:studentInfo.fullName,
-address:studentInfo.address,
-adharCardNumber:studentInfo.adharCardNumber,
-contactNumber:studentInfo.contactNumber,
-currentClass:studentInfo.currentClass,
-diseCode:studentInfo.diseCode,
-fatherName:studentInfo.fatherName,
-motherName:studentInfo.motherName,
-password:studentInfo.password,
-profilePicture:studentInfo.profilePicture,
-ssmId:studentInfo.ssmId,
-schoolId:studentInfo.schoolId
-        })
-
-        if(response.error){
-            setError(response.error)
-        }else if(response.success){
-            localStorage.setItem("smaToken" , response.token as string)
-router.replace("/studentDashBoard")
-        }else{
-            setError("Somethign wen wrong!")
-        }
-    } catch (error) {
-        console.log(error)
-    }finally{
-        setIsLoading(false)
+    } finally {
+      setImageLoading(false);
     }
-}
+  };
+
+  // Fetch school by DISE code (debounced)
+  useEffect(() => {
+    if (String(studentInfo.diseCode).length < 5) return;
+
+    const timer = setTimeout(() => {
+      (async () => {
+        const response = await getSchoolInfoByDiseCode(studentInfo.diseCode);
+
+        if (response.error) {
+          setSchoolError(response.error);
+          return;
+        }
+
+        if (response.success) {
+          setStudentInfo((prev) => ({
+            ...prev,
+            schoolId: response.school?._id as mongoose.Types.ObjectId,
+          }));
+          setSchoolInfo(response);
+        }
+      })();
+    }, 700);
+
+    return () => clearTimeout(timer);
+  }, [studentInfo.diseCode]);
+
+  // SUBMIT FORM
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const response = await registerStudent({
+        fullName: studentInfo.fullName,
+        address: studentInfo.address,
+        adharCardNumber: studentInfo.adharCardNumber,
+        contactNumber: studentInfo.contactNumber,
+        currentClass: studentInfo.currentClass,
+        diseCode: studentInfo.diseCode,
+        fatherName: studentInfo.fatherName,
+        motherName: studentInfo.motherName,
+        password: studentInfo.password,
+        profilePicture: studentInfo.profilePicture,
+        ssmId: studentInfo.ssmId,
+        schoolId: studentInfo.schoolId,
+      });
+
+      if (response.error) {
+        setError(response.error);
+      } else if (response.success) {
+        localStorage.setItem("smaToken", response.token as string);
+        router.replace("/studentDashBoard");
+      } else {
+        setError("Something went wrong!");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="p-6 max-w-xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">Student Registration</h2>
 
       <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
         {/* Full Name */}
-        <label htmlFor="fullName">Full Name</label>
+        <label>Full Name</label>
         <input
-          id="fullName"
           name="fullName"
           type="text"
-          placeholder="Enter full name"
           onChange={handleInputChange}
           className="border p-2 rounded"
         />
 
         {/* DISE Code */}
-        <label htmlFor="diseCode">School DISE Code</label>
+        <label>School DISE Code</label>
         <input
-          id="diseCode"
           name="diseCode"
           type="number"
-          placeholder="Enter DISE code"
           onChange={handleInputChange}
+          defaultValue={studentInfo.diseCode || ""}
           className="border p-2 rounded"
-        //   disabled={schoolInfo.success}
         />
-        {schoolInfo.success && <div className="text-green-400">{schoolInfo.school?.schoolName}</div>}
-        {schoolError && <div>{schoolError}</div>}
-        {/* Class Selection */}
-        <label htmlFor="currentClass">Current Class</label>
+
+        {schoolInfo.success && (
+          <div className="text-green-500">{schoolInfo.school?.schoolName}</div>
+        )}
+        {schoolError && <div className="text-red-500">{schoolError}</div>}
+
+        {/* Class */}
+        <label>Current Class</label>
         <select
-          id="currentClass"
           name="currentClass"
           onChange={handleInputChange}
+          defaultValue={studentInfo.currentClass || ""}
           className="border p-2 rounded"
         >
           <option value="">Select Class</option>
@@ -195,106 +208,94 @@ router.replace("/studentDashBoard")
         </select>
 
         {/* Contact Number */}
-        <label htmlFor="contactNumber">Contact Number</label>
+        <label>Contact Number</label>
         <input
-          id="contactNumber"
           name="contactNumber"
           type="number"
-          placeholder="Enter contact number"
           onChange={handleInputChange}
           className="border p-2 rounded"
         />
 
         {/* Father Name */}
-        <label htmlFor="fatherName">Father Name</label>
+        <label>Father Name</label>
         <input
-          id="fatherName"
           name="fatherName"
           type="text"
-          placeholder="Enter father name"
           onChange={handleInputChange}
           className="border p-2 rounded"
         />
 
         {/* Mother Name */}
-        <label htmlFor="motherName">Mother Name</label>
+        <label>Mother Name</label>
         <input
-          id="motherName"
           name="motherName"
           type="text"
-          placeholder="Enter mother name"
           onChange={handleInputChange}
           className="border p-2 rounded"
         />
 
-        {/* Aadhar Number */}
-        <label htmlFor="adharCardNumber">Aadhar Card Number</label>
+        {/* Aadhar */}
+        <label>Aadhar Card Number</label>
         <input
-          id="adharCardNumber"
           name="adharCardNumber"
           type="number"
-          placeholder="Enter Aadhar Number"
           onChange={handleInputChange}
           className="border p-2 rounded"
-          minLength={12}
-          maxLength={12}
         />
 
         {/* SSM ID */}
-        <label htmlFor="ssmId">SSM ID</label>
+        <label>SSM ID</label>
         <input
-          id="ssmId"
           name="ssmId"
           type="number"
-          placeholder="Enter SSM ID"
           onChange={handleInputChange}
           className="border p-2 rounded"
         />
 
         {/* Address */}
-        <label htmlFor="address">Address</label>
+        <label>Address</label>
         <textarea
-          id="address"
           name="address"
-          placeholder="Enter address"
           onChange={handleInputChange}
           className="border p-2 rounded"
         />
 
-        {/* Profile Picture URL */}
-        <label htmlFor="profilePicture">Profile Picture URL</label>
+        {/* Profile Picture */}
+        <label>Profile Picture</label>
         <input
-        disabled={isImageLoading}
-          id="profilePicture"
-          name="profilePicture"
           type="file"
+          name="profilePicture"
+          disabled={isImageLoading}
           onChange={handleImageChange}
           className="border p-2 rounded"
         />
 
         {/* Password */}
-        <label htmlFor="password">Password</label>
+        <label>Password</label>
         <input
-          id="password"
           name="password"
           type="password"
-          placeholder="Create password"
           onChange={handleInputChange}
           className="border p-2 rounded"
         />
-        <button type="submit" disabled={isLoading}>
-          {isLoading?"Registering...":"Register"}
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="p-2 bg-blue-600 text-white rounded"
+        >
+          {isLoading ? "Registering..." : "Register"}
         </button>
       </form>
 
-      {/* LIVE PREVIEW FOR DEBUGGING */}
+      {/* PREVIEW */}
       {imageLink && (
-        <Image src={imageLink} width={50} height={50} alt="Profile phone" />
+        <Image src={imageLink} width={50} height={50} alt="Profile" />
       )}
-      {error && (
-        <div>{error}</div>
-      )}
-      <div className="mt-5  p-3 rounded">
+
+      {error && <div className="text-red-500 mt-2">{error}</div>}
+
+      <div className="mt-5 p-3 rounded bg-gray-100">
         <h3 className="font-semibold mb-1">Live Student Data:</h3>
         <pre className="text-sm">{JSON.stringify(studentInfo, null, 2)}</pre>
       </div>
