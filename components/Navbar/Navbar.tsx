@@ -76,12 +76,6 @@ const NavBar =async () => {
 
 
 
-    // <div className="w-full flex justify-between gap-2 p-5 border-b border-white/15">
-    //   <Link href="/">SchoolManage</Link>
-    //   <div className='flex gap-2'>
-    //     <NavBarLeftDefault />
-    //     <NavRoleBaseAccess role={role}/>
-    //   </div>
-    // </div>
+   
 
 export default NavBar

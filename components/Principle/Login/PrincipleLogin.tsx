@@ -3,8 +3,9 @@ import { PrincipleLoginRequest } from '@/interfaces/Principle/Register/Login/Pri
 import { loginPrinciple } from '@/services/Principle/PrincipleLogin'
 import { useRouter } from 'next/navigation'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
-
-
+import {Label} from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Button } from '@/components/ui/button'
 
 
 
@@ -52,22 +53,43 @@ const PrincipleLogin = () => {
     }
 
   return (
-    <div className='flex flex-col gap-3 w-full p-10 justify-center items-center' >
+    <>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          onChange={handleChange}
+          type="text"
+          name="email"
+          id="email"
+          required
+          placeholder="abcd@gmail.com"
+          className="border rounded-md px-4 py-2 w-[300px] "
+        />
+        <Label htmlFor="password">Password</Label>
+        <Input
+          onChange={handleChange}
+          type="text"
+          name="password"
+          id="password"
+          required
+          placeholder="ex. abcd@1234"
+          className="border rounded-md px-4 py-2 "
+        />
+        <Button
+          className=" px-10  py-1 rounded-lg active:scale-95 w-full  "
+          disabled={loading}
+        >
+          {loading ? "Submit..." : "Submit"}
+        </Button>
+      </form>
 
-        <form onSubmit={handleSubmit} className='flex flex-col border text-center  w-fit p-5  justify-center items-center gap-5  rounded-2xl' >
-            <div className='text-2xl font-bold'>Principle Login</div>
-            <label htmlFor="email" >Email</label>
-            <input onChange={handleChange} type="text" name='email' id='email'required placeholder='enter you email' className='border rounded-md px-4 py-2 '/>
-            <label htmlFor="password">Password</label>
-            <input onChange={handleChange} type="text" name='password' id='password' required placeholder='enter your password' className='border rounded-md px-4 py-2 '/>
-            <button className='bg-[#e0e0e0] text-black px-10  py-1 rounded-lg active:scale-95 w-fit ' disabled={loading} >{loading?"Submit...":"Submit"}</button>
-        </form>
-
-        {error && (
-            <div className='bg-red-500/50 text-white px-4 py-2 rounded-2xl w-fit'>{error}</div>
-        )}
-    </div>
-  )
+      {error && (
+        <div className="bg-red-500/50 text-white px-4 py-2 rounded-2xl w-fit">
+          {error}
+        </div>
+      )}
+    </>
+  );
 }
 
 export default PrincipleLogin
