@@ -1,3 +1,5 @@
+import StudentSortInfoCard from '@/components/Student/StudentSortInfoCard'
+import StudentSortInfoCardSkeletonScreen from '@/components/Student/StudentSortInfoCardSkeletonScreen'
 import TeacherInfoCard from '@/components/Teacher/TeacherInfoCard'
 import TeacherInfoCardSkeletonScreen from '@/components/Teacher/TeacherInfoCardSkeletonScreen'
 import { TeacherInterface } from '@/interfaces/Teacher/TeacherInterface'
@@ -30,6 +32,10 @@ const TeacherPage =async () => {
     <div className="flex flex-col ">
       <Suspense fallback={<TeacherInfoCardSkeletonScreen/>}>
         <TeacherInfoCard {...teacher} />
+      </Suspense>
+
+      <Suspense fallback={<StudentSortInfoCardSkeletonScreen/>}>
+        <StudentSortInfoCard currentClass={teacher.classTeacher} diseCode={teacher.diseCode}/>
       </Suspense>
     </div>
   );
