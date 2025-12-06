@@ -52,7 +52,7 @@ const PrincipleLogin = () => {
     }
 
   return (
-    <div className='flex flex-col gap-3 w-full h-screen justify-center items-center' >
+    <div className='flex flex-col gap-3 w-full p-10 justify-center items-center' >
 
         <form onSubmit={handleSubmit} className='flex flex-col border text-center  w-fit p-5  justify-center items-center gap-5  rounded-2xl' >
             <div className='text-2xl font-bold'>Principle Login</div>

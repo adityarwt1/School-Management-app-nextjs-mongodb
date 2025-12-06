@@ -14,20 +14,36 @@ const LoginPage = () => {
   }
   console.log(role)
  
-  return ( 
-    <div className='w-full h-screen justify-center items-center'>
-      <div>
-        <select name="role" onChange={handleRoleSelect} className='text-black bg-white'>
-          <option value="principle" defaultChecked>Principle</option>
-          <option value="teacher">Teacher</option>
-          <option value="student">Student</option>
-        </select>
+  return (
+    <div className="w-full   h-screen items-center justify-center ">
+      
+      <div className='flex w-full justify-center itmes-center gap-3 h'> 
+        <div className='text-center'>Select Your Role</div>
+        <div className="flex justify-center min-h-fit ">
+          <select
+            name="role"
+            onChange={handleRoleSelect}
+            className="text-black bg-white rounded-md px-4 py-2 "
+          >
+            <option value="principle" defaultChecked>
+              Principle
+            </option>
+            <option value="teacher">Teacher</option>
+            <option value="student">Student</option>
+          </select>
+        </div>
       </div>
-
-      {role === "student" ? <StudentLogin/> :role === "principle" ? <PrincipleLogin/>:""}
-
+      <div>
+        {role === "student" ? (
+          <StudentLogin />
+        ) : role === "principle" ? (
+          <PrincipleLogin />
+        ) : (
+          ""
+        )}
+      </div>
     </div>
-  )
+  );
 }
 
 export default LoginPage

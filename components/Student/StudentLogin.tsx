@@ -43,7 +43,7 @@ const StudentLogin = () => {
         }
     }
   return (
-    <div className='flex flex-col gap-3 justify-center items-center h-screen'>
+    <div className='flex flex-col gap-3 justify-center items-center p-10'>
         <form onSubmit={handleSubmit} className='flex flex-col w-fit gap-3 '>
             <label htmlFor="ssmId">SSMID</label>
             <input type="number" name='ssmId' id='ssmId' onChange={handleChange} required className='px-4 py-2 border rounded-lg' placeholder='enter ssmid'/>
