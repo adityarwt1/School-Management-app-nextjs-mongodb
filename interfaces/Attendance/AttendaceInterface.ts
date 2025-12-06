@@ -6,3 +6,9 @@ export interface AttendanceInterface {
     date:Date
     currentYear:Date
 }
+
+
+export interface AttednaceResponse{
+    success:boolean
+    error?: string
+}
