@@ -2,6 +2,7 @@
 "use client"
 import PrincipleLogin from '@/components/Principle/Login/PrincipleLogin'
 import StudentLogin from '@/components/Student/StudentLogin'
+import TeacherLogin from '@/components/Teacher/TeacherLogin'
 import { Role } from '@/types/role'
 import React, {  ChangeEvent,useState } from 'react'
 
@@ -39,7 +40,7 @@ const LoginPage = () => {
         ) : role === "principle" ? (
           <PrincipleLogin />
         ) : (
-          ""
+          <TeacherLogin/>
         )}
       </div>
     </div>

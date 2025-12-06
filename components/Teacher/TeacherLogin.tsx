@@ -41,13 +41,13 @@ const TeacherLogin = () => {
         }
     }
   return (
-    <div className='flex flex-col justify-center items-center'>
-        <form  className='flex flex-col' onSubmit={handleSubmit}>
+    <div className='flex flex-col justify-center items-center p-10'>
+        <form  className='flex flex-col border border-white/15 p-5 rounded-lg gap-3' onSubmit={handleSubmit}>
             <label htmlFor="bcCode" className='text-left w-full'>BC Code/ID</label>
-            <input type="text" name="bcCode" id="bcCode" onChange={handleInputChange} placeholder='enter your bccode/Teacher id' required/>
+            <input type="text" name="bcCode" id="bcCode" onChange={handleInputChange} placeholder='enter your bccode/Teacher id' required className='border border-white/15 px-4 py-1 rounded '/>
             <label htmlFor="password" className='text-left w-full'>Password</label>
-            <input type="text" name="password" id="password" onChange={handleInputChange} placeholder='enter you password' required/>
-            <button type='submit'>{isLoading ?"Loading...":"Login"}</button>
+            <input type="text" name="password" id="password" onChange={handleInputChange} placeholder='enter you password' required className='border border-white/15 px-4 py-1 rounded '/>
+            <button type='submit' className='w-full bg-[#e0e0e0] text-black rounded-md py-1'>{isLoading ?"Loading...":"Login"}</button>
         </form>
         {errror && (
             <div className='bg-red-300 text-black'>{errror}</div>
