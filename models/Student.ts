@@ -13,7 +13,7 @@ const StudentSchema:Schema<StudentDocument> = new Schema({
         required:true
     },
     currentClass:{
-        type:String,
+        type:Number,
         required:true
     },
     contactNumber:{
