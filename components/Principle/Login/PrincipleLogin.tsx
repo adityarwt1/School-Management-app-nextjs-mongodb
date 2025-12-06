@@ -78,6 +78,7 @@ const PrincipleLogin = () => {
         <Button
           className=" px-10  py-1 rounded-lg active:scale-95 w-full  "
           disabled={loading}
+          type='submit'
         >
           {loading ? "Submit..." : "Submit"}
         </Button>
