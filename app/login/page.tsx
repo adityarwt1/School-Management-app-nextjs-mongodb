@@ -1,13 +1,16 @@
 
 "use client"
+import PrincipleLogin from '@/components/Principle/Login/PrincipleLogin'
+import StudentLogin from '@/components/Student/StudentLogin'
+import { Role } from '@/types/role'
 import React, {  ChangeEvent,useState } from 'react'
 
 const LoginPage = () => {
-  const [role , setRole] = useState("")
+  const [role , setRole] = useState<Role>("guest")
 
   const handleRoleSelect = (e:ChangeEvent<HTMLSelectElement>)=>{
     const role = e.target.value
-    setRole(role)
+    setRole(role as Role)
   }
   console.log(role)
  
@@ -20,6 +23,9 @@ const LoginPage = () => {
           <option value="student">Student</option>
         </select>
       </div>
+
+      {role === "student" ? <StudentLogin/> :role === "principle" ? <PrincipleLogin/>:""}
+
     </div>
   )
 }
