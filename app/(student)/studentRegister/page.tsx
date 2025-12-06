@@ -27,7 +27,7 @@ const StudentRegister = () => {
   const [studentInfo, setStudentInfo] = useState<StudentInterface>({
     fullName: "",
     diseCode: 0,
-    currentClass: "",
+    currentClass: 0,
     contactNumber: 0,
     fatherName: "",
     motherName: "",
@@ -43,7 +43,7 @@ const StudentRegister = () => {
   const classes = [
     "LKG",
     "UKG",
-    ...Array.from({ length: 12 }, (_, i) => `Class ${i + 1}`),
+    ...Array.from({ length: 12 }, (_, i) => i+1),
   ];
 
   // Generic input handler
@@ -58,6 +58,7 @@ const StudentRegister = () => {
       "contactNumber",
       "adharCardNumber",
       "ssmId",
+      "currentClass"
     ];
 
     setStudentInfo((prev) => ({

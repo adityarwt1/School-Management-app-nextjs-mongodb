@@ -3,7 +3,7 @@ import mongoose from "mongoose"
 export interface StudentInterface {
   fullName: string;
   diseCode: number;
-  currentClass: string;
+  currentClass: number;
   contactNumber: number;
   fatherName: string;
   motherName: string;
