@@ -1,14 +1,11 @@
 "use server"
+import { StudentInterfaceFor } from '@/interfaces/Student/SortInfo'
 import { mongoconnect } from '@/lib/mongodb'
 import Student from '@/models/Student'
 import React from 'react'
+import StudentCard from './StudentCard'
 
-interface StudentInterfaceFor{
-    fullName:string
-    profilePicture:string
-    fatherName:string
-    contactNumber:number
-}
+
 interface StudentInfoCardProps{
     diseCode:number
     currentClass:number
@@ -29,7 +26,13 @@ const StudentSortInfoCard:React.FC<StudentInfoCardProps> = async({diseCode, curr
 
 
   return (
-    <div>StudentSortInfoCard</div>
+    <div>
+        {
+            students.map((student, index)=>(
+                <StudentCard {...student} key={index}/>
+            ))
+        }
+    </div>
   )
 }
 
