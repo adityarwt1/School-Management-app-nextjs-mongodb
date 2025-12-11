@@ -1,4 +1,4 @@
 export interface StanderedResponse{
-    succcess:boolean,
+    success:boolean,
     error?:string
 }

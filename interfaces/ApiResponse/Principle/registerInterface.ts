@@ -9,5 +9,5 @@ export interface PrincipleRegisteredRequest {
 }
 
 export interface PrincipleRegisterResponse extends StanderedResponse{
-    token:string
+    token?:string
 }

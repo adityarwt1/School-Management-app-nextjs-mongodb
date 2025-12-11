@@ -9,6 +9,10 @@ const PrincipleSchema:Schema<PrincipleDocument> = new Schema({
         type:String,
         required:[true, "Please provide principle name."]
     },
+    bcCode:{
+        type:String,
+        required:[true, "Please provide the bc code."]
+    },
     email:{
         type:String,
         required:[true, "Please provide email id."]
