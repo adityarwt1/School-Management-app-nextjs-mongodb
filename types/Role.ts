@@ -1,0 +1,1 @@
+export type Role = "principle" |"teacher" | "student"
