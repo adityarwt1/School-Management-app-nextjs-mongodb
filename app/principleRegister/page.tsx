@@ -1,6 +1,6 @@
 "use client"
 import { PrincipleRegisteredRequest } from "@/interfaces/ApiResponse/Principle/registerInterface";
-import { convertToBase64 } from "@/services/images/convertobase64";
+import {  ImageServices } from "@/services/images/image";
 import { PrincipleApi } from "@/services/Principle/Principle";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
@@ -13,6 +13,7 @@ const PrincipleRegister = ()=>{
         password:"",
         profilePicture:""
     })
+    const imageServices = new ImageServices()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
     const router = useRouter()
@@ -30,7 +31,8 @@ const PrincipleRegister = ()=>{
         const file = e.target.files?.[0]
 
         if(file){
-            const url = await convertToBase64(file);
+            
+            const url = await imageServices.convertToBase64(file);
             setData(prev => ({
                 ...prev,
                 profilePicture:url as string
