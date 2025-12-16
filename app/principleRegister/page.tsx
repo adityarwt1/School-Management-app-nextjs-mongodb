@@ -1,7 +1,7 @@
 "use client"
 import { PrincipleRegisteredRequest } from "@/interfaces/ApiResponse/Principle/registerInterface";
 import { convertToBase64 } from "@/services/images/convertobase64";
-import { PrincipleApi, registerPrinciple } from "@/services/Principle/Register";
+import { PrincipleApi } from "@/services/Principle/Principle";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 
@@ -46,6 +46,7 @@ const PrincipleRegister = ()=>{
         try {
             const prncipleApis = new PrincipleApi()
             const response = await prncipleApis.registerPrinciple(data)
+
             if(response.success){
                 router.replace('/principleDashboard')
             }else{
