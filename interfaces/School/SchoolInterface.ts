@@ -11,3 +11,10 @@ export interface SchoolInterface  {
     logo:string
     principleId:string | mongoose.Types.ObjectId 
 }
+
+export interface SchoolRegisterResponse{
+    succuss:boolean
+    error?:string
+    message?:string
+
+}
