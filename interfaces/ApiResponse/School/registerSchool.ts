@@ -1,4 +1,5 @@
 export interface SchoolRegisterRequest{
+        logo:string,
         diseCode:number,
         schoolName:string, 
         pinCode:number
@@ -6,6 +7,5 @@ export interface SchoolRegisterRequest{
         from :number | string, 
         to:number,
         govt:boolean, 
-        logo:string
 }
 
