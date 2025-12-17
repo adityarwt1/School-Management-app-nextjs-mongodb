@@ -4,7 +4,7 @@ import { SchoolApi } from '@/services/School/School'
 import { BlobOptions } from 'buffer'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { ChangeEvent, FormEvent, useState, useTransition } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 
 const RegisterScholPage = () => {
     const [data, setData] = useState<SchoolRegisterRequest>({
