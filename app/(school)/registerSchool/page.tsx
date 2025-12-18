@@ -17,6 +17,7 @@ const RegisterScholPage = () => {
         schoolName:"",
         to:12,
     })
+    console.log(data)
     const [isLoading, setIsloading] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
     const [imageLoading, setImageLoading] = useState<boolean>(false)
@@ -57,9 +58,11 @@ const RegisterScholPage = () => {
 
     const handleSelectChange = (e:ChangeEvent<HTMLSelectElement>)=>{
         const {name, value} = e.target
+        console.log({name, value})
+        console.log(name === govtField)
         setData(prev=> ({
             ...prev,
-            [name]:numField.includes(name) ? Number(value):name == govtField ? Boolean(value) : value
+            [name]:numField.includes(name) ? Number(value): value == "false" ? false : true
         }))
     }
 
@@ -115,12 +118,18 @@ const RegisterScholPage = () => {
             </>
           ))}
         </select>
+        <label htmlFor="to">Class to</label>
         <select name="to" id="to" onChange={handleSelectChange}>
           {[...new Array(12)].map((ele, index) => (
             <>
               <option value={index+1}>{index +1}</option>
             </>
           ))}
+        </select>
+        
+        <select name="govt" id="govt" onChange={handleSelectChange}>
+          <option value="true">Government</option>
+          <option value="false">Private</option>
         </select>
 
       </form>
