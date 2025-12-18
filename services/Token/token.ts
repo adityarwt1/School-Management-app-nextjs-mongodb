@@ -1,10 +1,9 @@
-"use server"
 
 import { TokentInteface } from "@/interfaces/Token/tokenInterface";
 import { cookies } from "next/headers";
 import jwt, { JwtPayload } from "jsonwebtoken"
 
-export class Token{
+export  class  TokenServices{
     async getTokenInfo():Promise<TokentInteface | null  | JwtPayload | string>{
         const cookie = await cookies()
         const token = cookie.get("smaToken")?.value;

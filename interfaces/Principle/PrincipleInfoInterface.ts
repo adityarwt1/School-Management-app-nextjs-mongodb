@@ -8,3 +8,12 @@ export interface PrincipleInfoInterface{
     password:string,
     schoolId:string | mongoose.Types.ObjectId
 }
+
+export interface PrincipleCardInterface{
+    email:string,
+    bcCode:string
+    profilePicture:string
+    fullName:string
+    _id:string | mongoose.Types.ObjectId
+    schoolId:string | mongoose.Types.ObjectId
+}
