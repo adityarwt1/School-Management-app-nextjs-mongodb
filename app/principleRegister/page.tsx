@@ -4,7 +4,6 @@ import {  ImageServices } from "@/services/images/image";
 import { PrincipleApi } from "@/services/Principle/Principle";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
-
 const PrincipleRegister = ()=>{
     const [data, setData] = useState<PrincipleRegisteredRequest>({
         bcCode:"",

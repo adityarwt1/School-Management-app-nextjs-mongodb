@@ -26,7 +26,7 @@ const PrincipleDashBoard =async ()=>{
 
     const principleDoc = await Principle.findOne({_id:principleInfo._id}).select("fullName bcCode email profilePicture schoolId ").lean() as PrincipleCardInterface;
     
-    const schoolinfo = await School.findOne({principleId:principleDoc._id})
+    const schoolinfo = await School.findOne({principleId:principleDoc._id}).lean()
     console.log(schoolinfo)
     return  (
         <>
