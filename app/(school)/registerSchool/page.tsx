@@ -1,7 +1,7 @@
+"use client"
 import { SchoolRegisterRequest } from '@/interfaces/ApiResponse/School/registerSchool'
 import { ImageServices } from '@/services/images/image'
 import { SchoolApi } from '@/services/School/School'
-import { BlobOptions } from 'buffer'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
@@ -21,7 +21,7 @@ const RegisterScholPage = () => {
     const [error, setError] = useState<string>("")
     const [imageLoading, setImageLoading] = useState<boolean>(false)
     const [logoUrl, setLogoUrl] = useState<string | ArrayBuffer >("")
-    const [govtField, setGovtField] = useState<false>()
+    const [govtField] = useState<string>("govt")
     const [numField, setNumField] = useState<string[]>([
       "diseCode",
       "pinCode",
@@ -59,7 +59,7 @@ const RegisterScholPage = () => {
         const {name, value} = e.target
         setData(prev=> ({
             ...prev,
-            [name]:numField.includes(name) ? Number(value):value
+            [name]:numField.includes(name) ? Number(value):name == govtField ? Boolean(value) : value
         }))
     }
 
@@ -84,6 +84,7 @@ const RegisterScholPage = () => {
             setIsloading(false)
         }
     }
+
   return (
     <div className="flex w-full h-full py-10">
       <form onSubmit={handleSubmit}>
