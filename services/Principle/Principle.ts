@@ -2,7 +2,6 @@
 
 import { PrincipleLoginRequest, PrincipleLogistResponse } from "@/interfaces/ApiResponse/Principle/loginprinciple";
 import { PrincipleRegisteredRequest, PrincipleRegisterResponse } from "@/interfaces/ApiResponse/Principle/registerInterface";
-import { PrincipleInfoInterface } from "@/interfaces/Principle/PrincipleInfoInterface";
 
 
 export class PrincipleApi {
