@@ -1,5 +1,6 @@
 "use client"
 
+import { PrincipleLoginRequest, PrincipleLogistResponse } from "@/interfaces/ApiResponse/Principle/loginprinciple";
 import { PrincipleRegisteredRequest, PrincipleRegisterResponse } from "@/interfaces/ApiResponse/Principle/registerInterface";
 
 
@@ -25,5 +26,25 @@ export class PrincipleApi {
         error: "Internal server issue.",
       };
     }
+  }
+
+  // login principple
+  async loginPrinciple(data:PrincipleLoginRequest):Promise<PrincipleLogistResponse>{
+      try {
+        const response  = await fetch("/api/v1/principleLogin",{
+          method: "POST",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body:JSON.stringify(data)
+        })
+        const resData :PrincipleLogistResponse = await response.json()
+        return resData
+      } catch (error) {
+        return {
+          success:false,
+          error:"Internal server issue."
+        }
+      }
   }
 }

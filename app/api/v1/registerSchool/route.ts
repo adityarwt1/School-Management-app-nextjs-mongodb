@@ -40,7 +40,12 @@ export async function  POST(req: NextRequest) :Promise<NextResponse<StanderedRes
                     console.log("failed to connect database.")
                     return NextResponse.json({success:false, error:"Internal server issue."},{status:500})
                 }
+        
+            const exist = await School.findOne({diseCode:data.diseCode});
 
+        if(exist){
+             return NextResponse.json({success:false, error:"School already register with thi Dise Code."},{status:409})
+        }
         const school = await School.create({ ...data, principleId :decoded._id});
 
         if(!school){

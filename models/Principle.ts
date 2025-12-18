@@ -27,6 +27,7 @@ const PrincipleSchema:Schema<PrincipleDocument> = new Schema({
     },
     schoolId:{
         type:Schema.Types.ObjectId,
+        default:null
     }
 },{timestamps:true})
 
