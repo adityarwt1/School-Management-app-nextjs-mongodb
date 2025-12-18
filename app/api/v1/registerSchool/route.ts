@@ -9,7 +9,6 @@ import School from "@/models/School";
 
 export async function  POST(req: NextRequest) :Promise<NextResponse<StanderedResponse>>{
     const cookie = await cookies()
-    const signUpUrl= new URL('/signup', req.url)
     try {
         const data:SchoolRegisterRequest = await req.json();
 
@@ -44,7 +43,7 @@ export async function  POST(req: NextRequest) :Promise<NextResponse<StanderedRes
             const exist = await School.findOne({diseCode:data.diseCode});
 
         if(exist){
-             return NextResponse.json({success:false, error:"School already register with thi Dise Code."},{status:409})
+             return NextResponse.json({success:false, error:"School already register with this Dise Code."},{status:409})
         }
         const school = await School.create({ ...data, principleId :decoded._id});
 

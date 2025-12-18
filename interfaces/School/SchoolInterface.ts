@@ -13,9 +13,19 @@ export interface SchoolInterface  {
 }
 
 export interface SchoolRegisterResponse{
-    succuss:boolean
+    success:boolean
     error?:string
     message?:string
 
 }
 
+export interface SchoolCardInterface {
+  diseCode: number;
+  schoolName: string;
+  pinCode: number;
+  address: string;
+  from: number | string;
+  to: number;
+  govt: boolean;
+  logo: string;
+}

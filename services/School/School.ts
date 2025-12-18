@@ -17,7 +17,7 @@ export class SchoolApi {
             return resdata
         } catch (error) {
             return {
-                succuss:false,
+                success:false,
                 error:"Internal server issue.",
                 message:(error as Error).message
             }

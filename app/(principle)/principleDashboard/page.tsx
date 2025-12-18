@@ -7,6 +7,7 @@ import Principle from "@/models/Principle"
 import PrincipleCard from "@/components/Principle/PrincipleCard"
 import { PrincipleCardInterface } from "@/interfaces/Principle/PrincipleInfoInterface"
 import School from "@/models/School"
+import SchoolCard from "@/components/School/SchoolCard"
 
 const PrincipleDashBoard =async ()=>{
     const tokenServices = new TokenServices()
@@ -25,11 +26,12 @@ const PrincipleDashBoard =async ()=>{
 
     const principleDoc = await Principle.findOne({_id:principleInfo._id}).select("fullName bcCode email profilePicture schoolId ").lean() as PrincipleCardInterface;
     
-    const schoolinfo = await School.findOne({_id:principleDoc.schoolId})
+    const schoolinfo = await School.findOne({principleId:principleDoc._id})
     console.log(schoolinfo)
     return  (
         <>
-        <PrincipleCard {...principleDoc}/>
+        <PrincipleCard {...principleDoc} key={principleDoc._id as string}/>
+        <SchoolCard school={schoolinfo} key={principleDoc._id + "_SchoolId"}/>
         </>
     )
 }

@@ -72,13 +72,13 @@ const RegisterScholPage = () => {
         try {
             const schoolApiServices = new SchoolApi()
             const response  = await schoolApiServices.registerSchool(data) 
-            
-            if(response.succuss){
-                router.push('/principleDashboard')
-            }else if (response.error){
-                setError(response.error || "Failed to register school.")
-            }else{
-                setError("Failed to register school.")
+            console.log(response)
+            if (response.success) {
+              router.push("/principleDashboard");
+            } else if (response.error) {
+              setError(response.error || "Failed to register school.");
+            } else {
+              setError("Failed to register school.");
             }
 
         } catch (error) {
@@ -92,7 +92,7 @@ const RegisterScholPage = () => {
     <div className="flex w-full h-full py-10">
       <form onSubmit={handleSubmit}>
         <label htmlFor="logo">Logo</label>
-        <input type="file" onChange={handleImageChange} name="logo" />
+        <input type="file" onChange={handleImageChange} name="logo" required />
         {logoUrl && (
           <Image
             src={logoUrl as string}
@@ -103,15 +103,15 @@ const RegisterScholPage = () => {
           />
         )}
         <label htmlFor="diseCode">Dise Code</label>
-        <input type="text" onChange={handleChange} name="diseCode" />
+        <input type="text" onChange={handleChange} name="diseCode"  required/>
         <label htmlFor="schoolName">School Name</label>
-        <input type="text" onChange={handleChange} name="schoolName" />
+        <input type="text" onChange={handleChange} name="schoolName" required />
         <label htmlFor="pinCode">Pin code</label>
-        <input type="text" onChange={handleChange} name="pinCode" />
+        <input type="text" onChange={handleChange} name="pinCode" required />
         <label htmlFor="address">Address</label>
-        <input type="text" onChange={handleChange} name="address" />
+        <input type="text" onChange={handleChange} name="address"  required/>
         <label htmlFor="from">Class From</label>
-        <select name="from" id="from" onChange={handleSelectChange}>
+        <select name="from" id="from" onChange={handleSelectChange} required>
           {[...new Array(12)].map((ele, index) => (
             <>
               <option value={index+1}>{index +1}</option>
@@ -119,20 +119,23 @@ const RegisterScholPage = () => {
           ))}
         </select>
         <label htmlFor="to">Class to</label>
-        <select name="to" id="to" onChange={handleSelectChange}>
+        <select name="to" id="to" onChange={handleSelectChange} required>
           {[...new Array(12)].map((ele, index) => (
             <>
               <option value={index+1}>{index +1}</option>
             </>
           ))}
         </select>
-        
-        <select name="govt" id="govt" onChange={handleSelectChange}>
-          <option value="true">Government</option>
+        <label htmlFor="govt">School Type</label>
+        <select name="govt" id="govt" onChange={handleSelectChange} required>
+          <option value="true" >Government</option>
           <option value="false">Private</option>
         </select>
-
+          <button type='submit' disabled={isLoading}>{ isLoading ? "Add School...":"Ad school"}</button>
       </form>
+      {error && (
+        <div>{error}</div>
+      )}
     </div>
   );
 }
