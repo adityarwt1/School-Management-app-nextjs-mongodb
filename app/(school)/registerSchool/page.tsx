@@ -1,5 +1,5 @@
 "use client"
-import { SchoolRegisterRequest } from '@/interfaces/ApiResponse/School/registerSchool'
+import { SchoolRegisterRequest } from '@/interfaces/ApiResponse/School/school'
 import { ImageServices } from '@/services/images/image'
 import { SchoolApi } from '@/services/School/School'
 import Image from 'next/image'

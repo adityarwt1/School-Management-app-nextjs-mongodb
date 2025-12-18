@@ -18,3 +18,4 @@ export interface SchoolRegisterResponse{
     message?:string
 
 }
+

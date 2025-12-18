@@ -1,5 +1,5 @@
 "use client"
-import { SchoolRegisterRequest } from "@/interfaces/ApiResponse/School/registerSchool";
+import { SchoolRegisterRequest } from "@/interfaces/ApiResponse/School/school";
 import { SchoolRegisterResponse } from "@/interfaces/School/SchoolInterface";
 
 export class SchoolApi {

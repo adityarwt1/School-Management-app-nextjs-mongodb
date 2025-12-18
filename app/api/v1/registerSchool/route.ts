@@ -1,4 +1,4 @@
-import { SchoolRegisterRequest } from "@/interfaces/ApiResponse/School/registerSchool";
+import { SchoolRegisterRequest } from "@/interfaces/ApiResponse/School/school";
 import { StanderedResponse } from "@/interfaces/ApiResponse/standeredResponse";
 import { mongoconnect } from "@/lib/mongodb";
 import { cookies } from "next/headers";

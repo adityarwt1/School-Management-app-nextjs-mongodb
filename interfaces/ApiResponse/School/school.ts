@@ -1,3 +1,5 @@
+import { SchoolInterface } from "@/interfaces/School/SchoolInterface";
+
 export interface SchoolRegisterRequest{
         logo:string,
         diseCode:number,
@@ -9,3 +11,8 @@ export interface SchoolRegisterRequest{
         govt:boolean, 
 }
 
+export interface GetSchoolInterfaceResponse {
+  school?: SchoolInterface;
+  success: boolean;
+  error?: string;
+}
