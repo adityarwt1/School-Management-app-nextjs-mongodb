@@ -63,7 +63,11 @@ const PrincipleLoginPage = () => {
         <label htmlFor="password">Password</label>
         <input type="text" onChange={handleChange} required name='password'/>
         <button type='submit' disabled={isLoadin}>{isLoadin ? "Login...":"Login"}</button>
+        {error && (
+          <div>{error}</div>
+        )}
       </form>
+
     </div>
   )
 }
