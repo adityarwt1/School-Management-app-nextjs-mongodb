@@ -2,6 +2,7 @@
 
 import { PrincipleLoginRequest, PrincipleLogistResponse } from "@/interfaces/ApiResponse/Principle/loginprinciple";
 import { PrincipleRegisteredRequest, PrincipleRegisterResponse } from "@/interfaces/ApiResponse/Principle/registerInterface";
+import { PrincipleInfoInterface } from "@/interfaces/Principle/PrincipleInfoInterface";
 
 
 export class PrincipleApi {
@@ -40,11 +41,13 @@ export class PrincipleApi {
         })
         const resData :PrincipleLogistResponse = await response.json()
         return resData
-      } catch (error) {
+      } catch {
         return {
           success:false,
           error:"Internal server issue."
         }
       }
   }
+
+
 }
