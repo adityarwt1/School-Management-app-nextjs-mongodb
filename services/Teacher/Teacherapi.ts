@@ -1,7 +1,7 @@
 "use client"
 
 import { StanderedResponse } from "@/interfaces/ApiResponse/standeredResponse";
-import { TeacherRegisterInterface } from "@/interfaces/Teacher/TeacherInterfaces";
+import { TeacherLoginInterface, TeacherRegisterInterface } from "@/interfaces/Teacher/TeacherInterfaces";
 
 export class TeacherApi{
     async registerTeacher(data:TeacherRegisterInterface):Promise<StanderedResponse>{
@@ -20,6 +20,26 @@ export class TeacherApi{
                 success:false,
                 error:"Internal server issue.",
                 message:(error as Error).message
+            }
+        }
+    }
+
+    async loginTeacher(data:TeacherLoginInterface):Promise<StanderedResponse>{
+        try {
+            const response = await fetch("/api/v1/loginTeacher", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            });
+
+            const resData:StanderedResponse = await response.json()
+            return resData;
+        } catch {
+            return {
+                success:false, 
+                error:"Internal server issue!"
             }
         }
     }
