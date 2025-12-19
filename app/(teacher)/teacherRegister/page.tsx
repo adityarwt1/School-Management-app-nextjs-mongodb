@@ -18,7 +18,7 @@ const TeacherRegisterPage = () => {
   const [error, setError] = useState<string>("")
   const router = useRouter()
   const [showPassword, setSchowPassword] = useState<boolean>(false)
-  const [numField, setNumField] = useState(['diseCode','contactNumber'])
+  const [numField] = useState(['diseCode','contactNumber'])
   const teacherApiServices = new TeacherApi()
   
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
@@ -60,24 +60,27 @@ const TeacherRegisterPage = () => {
     <>
       <form onSubmit={handleSubmit}>
         <label htmlFor="diseCode">Dise Code</label>
-        <input type="number" name="diseCode" onChange={handleChange} />
+        <input type="number" name="diseCode" onChange={handleChange} required/>
         <label htmlFor="bcCode">BcCode</label>
-        <input type="text" onChange={handleChange} name="bcCode" />
+        <input type="text" onChange={handleChange} name="bcCode" required/>
         <label htmlFor="email">Email</label>
-        <input type="text" onChange={handleChange} name="email" />
+        <input type="text" onChange={handleChange} name="email" required/>
         <label htmlFor="fullName">Full Name</label>
-        <input type="text" name="fullName" onChange={handleChange} />
+        <input type="text" name="fullName" onChange={handleChange} required/>
         <label htmlFor="contactNumber">ContactNumber</label>
-        <input type="text" name="contactNumber" onChange={handleChange} />
+        <input type="text" name="contactNumber" onChange={handleChange} required/>
         <label htmlFor="password">Password</label>
         <div>
-          <input type="text" name="password" onChange={handleChange} />
+          <input type="text" name="password" onChange={handleChange} required/>
           <button onClick={handleShowPassword}>{!showPassword ?"Show":"Hide"}</button>
         </div>
         <button type="submit" disabled={isLoading}>
           {isLoading ? "Register..." : "Register"}
         </button>
       </form>
+      {error && (
+        <div>{error}</div>
+      )}
     </>
   );
 }
