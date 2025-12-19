@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) :Promise<NextResponse<StanderedResp
         }
 
         const hashedPassword = await hash(data.password, 10)
-        const teacher = await Teacher.create({...data, password:hashedPassword})
+        const teacher = await Teacher.create({...data, password:hashedPassword , schoolId:school._id})
 
         if(!teacher){
             return NextResponse.json({success:false, error:"Failed to create teacher!"},{status:500})
@@ -63,9 +63,9 @@ export async function POST(req: NextRequest) :Promise<NextResponse<StanderedResp
         }
 
 
-        return NextResponse.json({ success: true }, { status: 200 })
+        return NextResponse.json({ success: true , message:"Teacher register successfull!"}, { status: 200 })
     } catch (error) {
         console.log(error)
-        return NextResponse.json({ error: "Internal server issue." , success:false}, { status: 500 })
+        return NextResponse.json({ error: "Internal server issue." , success:false, message:(error as Error).message}, { status: 500 })
     }
 }
