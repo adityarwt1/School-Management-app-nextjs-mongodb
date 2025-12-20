@@ -9,8 +9,8 @@ const PrincipleCard: React.FC<PrincipleCardInterface> = ({
   email,
 }) => {
   return (
-    <div className="w-full p-4">
-      <div className="border h-full border-[#112A46]/15 rounded-2xl shadow-md bg-white flex items-center gap-6 p-6">
+    <div className="w-full max-w-md p-4">
+      <div className="h-full border border-[#112A46]/15 rounded-2xl shadow-md bg-white flex items-center gap-6 p-6">
         {/* PROFILE IMAGE */}
         <div className="relative w-20 h-20 rounded-full overflow-hidden border border-gray-200 shrink-0">
           <Image
@@ -25,18 +25,18 @@ const PrincipleCard: React.FC<PrincipleCardInterface> = ({
 
         {/* TEXT CONTENT */}
         <div className="flex flex-col gap-1 text-sm flex-1">
-          <p className="flex gap-1">
-            <span className="text-gray-500 font-medium">Name:</span>
+          <p>
+            <span className="text-gray-500 font-medium">Name:</span>{" "}
             <span className="text-gray-800 font-semibold">{fullName}</span>
           </p>
 
-          <p className="flex gap-1">
-            <span className="text-gray-500 font-medium">BC Code:</span>
+          <p>
+            <span className="text-gray-500 font-medium">BC Code:</span>{" "}
             <span className="text-gray-800">{bcCode}</span>
           </p>
 
-          <p className="flex gap-1 break-all">
-            <span className="text-gray-500 font-medium">Email:</span>
+          <p className="break-all">
+            <span className="text-gray-500 font-medium">Email:</span>{" "}
             <span className="text-gray-800">{email}</span>
           </p>
         </div>

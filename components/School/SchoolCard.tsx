@@ -10,22 +10,24 @@ interface SchoolCardProps {
 const SchoolCard: React.FC<SchoolCardProps> = ({ school }) => {
   if (!school) {
     return (
-      <div className="w-full p-4">
-        <Link
-          href="/registerSchool"
-          className="inline-flex items-center justify-center px-6 py-3 border border-black/15 shadow-md rounded-xl bg-white hover:shadow-lg transition"
-        >
-          Add Your School
-        </Link>
+      <div className="w-full max-w-md p-4">
+        <div className="h-full border border-[#112A46]/15 rounded-2xl shadow-md bg-white flex items-center justify-center p-6">
+          <Link
+            href="/registerSchool"
+            className="px-6 py-3 border border-black/15 shadow-md rounded-xl hover:shadow-lg transition"
+          >
+            Add Your School
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full p-4">
-      <div className="border border-[#112A46]/15 rounded-2xl shadow-md bg-white flex items-center gap-6 p-6">
+    <div className="w-full max-w-md p-4">
+      <div className="h-full border border-[#112A46]/15 rounded-2xl shadow-md bg-white flex items-center gap-6 p-6">
         {/* SCHOOL LOGO */}
-        <div className="relative w-16 h-16 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+        <div className="relative w-16 h-16 rounded-full overflow-hidden border border-gray-200 shrink-0">
           <Image
             src={school.logo}
             alt={`${school.schoolName} logo`}
@@ -38,12 +40,8 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ school }) => {
 
         {/* SCHOOL DETAILS */}
         <div className="flex flex-col gap-1 text-sm flex-1">
-          <p className="font-semibold text-gray-800 text-base">
+          <p className="text-base font-semibold text-gray-800">
             {school.schoolName}
-          </p>
-
-          <p className="text-gray-600">
-            <span className="font-medium">Address:</span> {school.address}
           </p>
 
           <div className="flex flex-wrap gap-4 text-gray-600">

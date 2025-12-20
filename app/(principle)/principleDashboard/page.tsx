@@ -42,6 +42,8 @@ const PrincipleDashBoard =async ()=>{
               key={principleDoc._id + "_SchoolId"}
             />
           </Suspense>
+          
+
         </div>
       </>
     );
