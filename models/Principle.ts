@@ -29,6 +29,9 @@ const PrincipleSchema:Schema<PrincipleDocument> = new Schema({
         type:Schema.Types.ObjectId,
         default:null,
         ref:"School"
+    },
+    govt:{
+        type:Boolean
     }
 },{timestamps:true})
 

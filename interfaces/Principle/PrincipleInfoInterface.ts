@@ -6,7 +6,8 @@ export interface PrincipleInfoInterface{
     bcCode:string
     profilePicture?:string
     password:string,
-    schoolId:string | mongoose.Types.ObjectId
+    schoolId:string | mongoose.Types.ObjectId,
+    govt:boolean
 }
 
 export interface PrincipleCardInterface{
