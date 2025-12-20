@@ -30,3 +30,10 @@ export interface StudenterRegisterInterface {
   contactNumber: number;
   password: string;
 }
+
+export interface StudentLoginInterface{
+  email?:string,
+  ssmId?:number,
+  password:string,
+}
+

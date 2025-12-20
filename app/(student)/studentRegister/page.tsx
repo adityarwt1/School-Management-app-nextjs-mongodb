@@ -20,7 +20,6 @@ const StudentRegisterPage = () => {
     profilePicture: "",
     ssmId: 0,
   });
-  console.log(data)
   const router = useRouter();
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
