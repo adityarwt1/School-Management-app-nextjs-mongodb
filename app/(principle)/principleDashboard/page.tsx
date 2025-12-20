@@ -27,12 +27,12 @@ const PrincipleDashBoard =async ()=>{
     }
 
     const principleDoc = await Principle.findOne({_id:principleInfo._id}).select("fullName bcCode email profilePicture schoolId ").lean() as PrincipleCardInterface;
-    
+    console.log (principleDoc)
     const schoolinfo = await School.findOne({principleId:principleDoc._id}).lean()
     console.log(schoolinfo)
     return (
       <>
-        <div className="flex w-full bg-red-400">
+        <div className="flex w-full  justify-center itmes-center">
           <Suspense fallback={<PrincipleSkeletonScreen />}>
             <PrincipleCard {...principleDoc} key={principleDoc._id as string} />
           </Suspense>
