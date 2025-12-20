@@ -9,7 +9,7 @@ const PrincipleCard: React.FC<PrincipleCardInterface> = ({
   email,
 }) => {
   return (
-    <div className="w-full max-w-md p-4">
+    <div className="w-full  p-4">
       <div className="h-full border border-[#112A46]/15 rounded-2xl shadow-md bg-white flex items-center gap-6 p-6">
         {/* PROFILE IMAGE */}
         <div className="relative w-20 h-20 rounded-full overflow-hidden border border-gray-200 shrink-0">

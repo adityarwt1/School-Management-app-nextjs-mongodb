@@ -10,7 +10,7 @@ interface SchoolCardProps {
 const SchoolCard: React.FC<SchoolCardProps> = ({ school }) => {
   if (!school) {
     return (
-      <div className="w-full max-w-md p-4">
+      <div className="w-full  p-4">
         <div className="h-full border border-[#112A46]/15 rounded-2xl shadow-md bg-white flex items-center justify-center p-6">
           <Link
             href="/registerSchool"
@@ -24,7 +24,7 @@ const SchoolCard: React.FC<SchoolCardProps> = ({ school }) => {
   }
 
   return (
-    <div className="w-full max-w-md p-4">
+    <div className="w-full p-4">
       <div className="h-full border border-[#112A46]/15 rounded-2xl shadow-md bg-white flex items-center gap-6 p-6">
         {/* SCHOOL LOGO */}
         <div className="relative w-16 h-16 rounded-full overflow-hidden border border-gray-200 shrink-0">

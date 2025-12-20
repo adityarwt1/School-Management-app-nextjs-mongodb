@@ -8,6 +8,7 @@ interface PrincipleNavProps{
 const PrincipleNav :React.FC<PrincipleNavProps> = ({govt}) => {
   return (
     <div className='flex gap-2 text-white'>
+        {<Link href="/principledashboard" ><NavigationButton title='Dashboard'/></Link>}
         {govt && <Link href="/feesManagement" ><NavigationButton title='Fees Management'/></Link>}
         <Link href="/teacherManagement"><NavigationButton title='Teacher Management'/></Link>
         <Link href="/studentManagement"><NavigationButton title='Student Management'/></Link>
