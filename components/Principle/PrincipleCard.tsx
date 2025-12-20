@@ -5,7 +5,7 @@ import React from 'react'
 const PrincipleCard : React.FC<PrincipleCardInterface> = (props) => {
 
   return (
-    <div>
+    <div className='w-full bg-green-500' >
         <div>{props.bcCode}</div>
         <div>{props.email}</div>
         <div>{props.fullName}</div>
