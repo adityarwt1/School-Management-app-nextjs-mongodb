@@ -13,18 +13,25 @@ export async function POST(req: NextRequest):Promise<NextResponse<StanderedRespo
     const cookieServies  = new CookieServices()
     try {
         const data:StudentLoginInterface = await req.json()
-
+        console.log(data)
         if(!data){
             return NextResponse.json({success:false,error:"Field not provide successfully!"},{status:400})
         }
 
+        const filter:{email?:string, ssmId?:number} ={}
+
+        if(data.ssmId){
+            filter.ssmId = Number(data.ssmId)
+        }else{
+            filter.email = data.email
+        }
         const isConnected = await mongoconnect()
 
         if(!isConnected){
             return NextResponse.json({success:false, error:"Internal server issue."},{status:500})
         }
 
-        const student = await Student.findOne({ssmId:data.ssmId}).select("_id schoolId password").lean();
+        const student = await Student.findOne(filter).select("_id schoolId password").lean();
 
         if(!student){
             return NextResponse.json({success:false, error:"Student not register yet!, Register first."},{status:404})
