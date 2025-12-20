@@ -6,9 +6,14 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken"
 import { TokentInteface } from "@/interfaces/Token/tokenInterface";
 import School from "@/models/School";
+import Principle from "@/models/Principle";
+import { JWTSERVICES } from "@/services/JWT/jwt";
+import { CookieServices } from "@/services/Cookie/cookie";
 
 export async function  POST(req: NextRequest) :Promise<NextResponse<StanderedResponse>>{
     const cookie = await cookies()
+    const jwtServices = new JWTSERVICES()
+    const cookieServices = new CookieServices()
     try {
         const data:SchoolRegisterRequest = await req.json();
 
@@ -51,20 +56,30 @@ export async function  POST(req: NextRequest) :Promise<NextResponse<StanderedRes
             return NextResponse.json({success:false, error:"Failed to create school"})
         }
 
+        await Principle.findOneAndUpdate({
+            _id:decoded._id,
+        },{
+            govt:data.govt
+        })
         // cookie set to the cookie
         const newTokenPayload :TokentInteface={
             _id:decoded._id,
             role:"principle",
-            schoolId:school._id
+            schoolId:school._id,
+            govt:data.govt
         }
-        const asignedToken = jwt.sign(newTokenPayload, process.env.JWT_SECRET as string,{
-            issuer:"Aditya rawat"
-        })
-        cookie.set("smaToken",asignedToken, {
-            httpOnly:true,
-        });
+        const tokenMade = jwtServices.createToken(newTokenPayload) 
 
-        return NextResponse.json({ success: true , token: asignedToken }, { status: 200 })
+        if(!tokenMade){
+            return NextResponse.json({success:false, error:"Internal server issue."},{status:500})
+        }
+
+        const isSavedToCookie = await cookieServices.setCookie(tokenMade)
+
+        if(!isSavedToCookie){
+            return NextResponse.json({ success:false,error:"Internal server issue."},{status:500})
+        }
+        return NextResponse.json({ success: true  }, { status: 200 })
     } catch (error) {
         console.log(error)
         return NextResponse.json({ success:false, error: "Internal server issue." }, { status: 500 })
