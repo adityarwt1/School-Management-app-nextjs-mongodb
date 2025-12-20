@@ -1,0 +1,34 @@
+import { TokentInteface } from '@/interfaces/Token/tokenInterface'
+import { TokenServices } from '@/services/Token/token'
+import React from 'react'
+import StudentNav from '@/components/Navbar/StudentNav'
+import Link from 'next/link'
+
+const Navbar = async () => {
+    const tokeServices = new TokenServices()
+    const tokenInfo = await tokeServices.getTokenInfo() as TokentInteface
+
+    
+
+    return (
+      <div className="flex px-6 py-3 items-center justify-between border border-black/15 bg-blue-900 ">
+        <h1 className="text-2xl font-black text-white">SMA</h1>
+        <div>
+          {tokenInfo.role == "student" && <StudentNav />}
+          
+          {!tokenInfo && (
+            <Link href="/principleLogin" prefetch={true}>
+              SingIn
+            </Link>
+          )}
+          {!tokenInfo && (
+            <Link href="/principleRegister" prefetch={true}>
+              SignUp
+            </Link>
+          )}
+        </div>
+      </div>
+    );
+}
+
+export default Navbar

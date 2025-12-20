@@ -42,7 +42,7 @@ const PrincipleLoginPage = () => {
         const response = await principleServices.loginPrinciple(data)
 
         if(response.success){
-            router.replace('/principleDashboard')
+            router.replace('/principledashboard')
         }else if(response.error){
           setError(response.error || "Faild to login.")
         }else{
