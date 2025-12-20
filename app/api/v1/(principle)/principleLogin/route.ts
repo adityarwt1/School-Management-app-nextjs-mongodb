@@ -7,6 +7,7 @@ import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken"
 import { cookies } from "next/headers";
+import School from "@/models/School";
 
 export async function POST(req: NextRequest):Promise<NextResponse<PrincipleLogistResponse>> {
     try {
@@ -40,12 +41,13 @@ export async function POST(req: NextRequest):Promise<NextResponse<PrincipleLogis
         }
 
         // token setup
-        const tokenPayload:TokentInteface = {
-            _id:principleDoc._id,
-            role:"principle",
-            schoolId:principleDoc?.schoolId ? principleDoc.schoolId: null,
-            govt:principleDoc?.govt ? principleDoc.govt :null
-        }
+        const school = await School.findOne({principleId:principleDoc?._id}).select("_id  govt").lean()
+        const tokenPayload: TokentInteface = {
+          _id: principleDoc._id,
+          role: "principle",
+          schoolId: school ? school._id : null,
+          govt: school ? school.govt : null,
+        };
 
         const token = jwt.sign(tokenPayload, process.env.JWT_SECRET as string,{
             expiresIn: 30 * 24 * 60*60*1000,
