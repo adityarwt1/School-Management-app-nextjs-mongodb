@@ -8,7 +8,8 @@ export interface TeacherInterFace{
   email:string
   password:string
   contactNumber:number,
-  diseCode:number
+  diseCode:number,
+  govt:boolean
 }
 
 export interface TeacherRegisterInterface {

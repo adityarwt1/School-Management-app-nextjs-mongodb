@@ -41,7 +41,8 @@ export async function POST(req: NextRequest):Promise<NextResponse<PrincipleRegis
        const tokenPayload :TokentInteface={
         _id:principle._id,
         role:"principle",
-        schoolId:principle.schoolId
+        schoolId:principle.schoolId,
+        govt:principle.govt
        } 
        
        const token  = jwt.sign(tokenPayload, process.env.JWT_SECRET as string);

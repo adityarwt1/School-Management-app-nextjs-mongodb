@@ -14,6 +14,7 @@ export interface StudentInterface{
     profilePicture:string
     contactNumber:number
     password:string
+    govt:boolean
 }
 
 export interface StudenterRegisterInterface {

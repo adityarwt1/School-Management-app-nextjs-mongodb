@@ -32,6 +32,9 @@ const TeacherSchema:Schema<TeacherDocument> = new Schema({
         type:Schema.Types.ObjectId,
         required:true,
         ref:"School"
+    },
+    govt:{
+        type:Boolean
     }
 },{timestamps:true})
 

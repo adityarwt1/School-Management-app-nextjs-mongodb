@@ -78,6 +78,11 @@ const StudentSchema: Schema<StudentDocument> = new Schema(
       type: String,
       required: true,
     },
+    govt:{
+      type:Boolean,
+      required:true,
+    },
+    
   },
   {
     timestamps: true,

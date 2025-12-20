@@ -3,19 +3,28 @@ import { TokenServices } from '@/services/Token/token'
 import React from 'react'
 import StudentNav from '@/components/Navbar/StudentNav'
 import Link from 'next/link'
+import PrincipleNav from './PrincipleNav'
+import { mongoconnect } from '@/lib/mongodb'
+import School from '@/models/School'
+import { redirect } from 'next/navigation'
 
 const Navbar = async () => {
     const tokeServices = new TokenServices()
     const tokenInfo = await tokeServices.getTokenInfo() as TokentInteface
 
-    
+    const isConnected = await mongoconnect()
 
+    if(!isConnected){
+        throw new Error("Internal server issue.")
+    }
+   
+    const school = await School.findOne({_id:tokenInfo.schoolId})
     return (
-      <div className="flex px-6 py-3 items-center justify-between border border-black/15 bg-blue-900 ">
+      <div className="flex px-6 py-3 items-center justify-between border border-black/15 bg-[#112A46] shadow-md ">
         <h1 className="text-2xl font-black text-white">SMA</h1>
         <div>
           {tokenInfo.role == "student" && <StudentNav />}
-          
+            {tokenInfo.role === "principle" && <PrincipleNav/>}
           {!tokenInfo && (
             <Link href="/principleLogin" prefetch={true}>
               SingIn

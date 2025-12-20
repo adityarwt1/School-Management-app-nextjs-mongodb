@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) :Promise<NextResponse<StanderedResp
             filter.bcCode = data.bcCode
         }
 
-        const teacher = await Teacher.findOne(filter).select("_id email bcCode password schoolId").lean<TeacherInterFace>()
+        const teacher = await Teacher.findOne(filter).select("_id email bcCode password schoolId govt").lean<TeacherInterFace>()
 
         if(!teacher){
             return NextResponse.json({success:false, error:'Teacher not foun!'},{status:404})
@@ -50,7 +50,9 @@ export async function POST(req: NextRequest) :Promise<NextResponse<StanderedResp
         const tokenPayload:TokentInteface ={
             _id:teacher._id,
             role:"teacher",
-            schoolId: teacher.schoolId
+            schoolId: teacher.schoolId,
+            govt:teacher.govt
+
         }
 
         const token = jwtServices.createToken(tokenPayload)

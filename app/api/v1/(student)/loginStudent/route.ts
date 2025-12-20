@@ -31,7 +31,7 @@ export async function POST(req: NextRequest):Promise<NextResponse<StanderedRespo
             return NextResponse.json({success:false, error:"Internal server issue."},{status:500})
         }
 
-        const student = await Student.findOne(filter).select("_id schoolId password").lean();
+        const student = await Student.findOne(filter).select("_id schoolId password govt").lean();
 
         if(!student){
             return NextResponse.json({success:false, error:"Student not register yet!, Register first."},{status:404})
@@ -46,7 +46,8 @@ export async function POST(req: NextRequest):Promise<NextResponse<StanderedRespo
         const tokenPayLoad:TokentInteface={
             _id:student._id,
             role:"student",
-            schoolId:student.schoolId
+            schoolId:student.schoolId,
+            govt:student.govt
         }
 
         const token = jwtServices.createToken(tokenPayLoad)

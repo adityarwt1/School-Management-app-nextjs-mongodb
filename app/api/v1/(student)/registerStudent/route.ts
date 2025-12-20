@@ -30,14 +30,14 @@ export async function POST(req: NextRequest) :Promise<NextResponse<StanderedResp
         if(isExist){
             return NextResponse.json({success:false, error:"Student already register!"},{status:409})
         }
-        const school = await School.findOne({diseCode:data.diseCode}).select("_id").lean()
+        const school = await School.findOne({diseCode:data.diseCode}).select("_id govt").lean()
 
         if(!school){
             return NextResponse.json({success:false, error:"School not register currently!"},{status:400})
         }
 
         const hashPassword = await hash(data.password, 10)
-        const student = await Student.create({...data, password:hashPassword, schoolId:school._id})
+        const student = await Student.create({...data, password:hashPassword, schoolId:school._id , govt:school.govt})
 
         if(!student){
             return NextResponse.json({success:false, error:"Failed to creat student!"},{status:500})
@@ -46,7 +46,8 @@ export async function POST(req: NextRequest) :Promise<NextResponse<StanderedResp
         const tokenPayload :TokentInteface ={
             _id:student._id,
             role:"student",
-            schoolId:school._id
+            schoolId:school._id,
+            govt:school.govt
         }
 
         const token = jwtSevices.createToken(tokenPayload);
