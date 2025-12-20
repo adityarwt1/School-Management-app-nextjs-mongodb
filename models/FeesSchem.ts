@@ -30,4 +30,4 @@ const FeesSchemaModel: Schema<FeesDocument> = new Schema(
 // Add indexes for better query performance
 FeesSchemaModel.index({ class: 1, schoolId: 1 }, { unique: true }); // Ensures unique fees per class per school
 
-export const Fees = mongoose.model<FeesDocument>("Fees", FeesSchemaModel);
+export const Fees = mongoose.models.Fees ||  mongoose.model<FeesDocument>("Fees", FeesSchemaModel);

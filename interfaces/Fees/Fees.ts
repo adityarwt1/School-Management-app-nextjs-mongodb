@@ -12,3 +12,10 @@ export interface UpdateFeesBody {
   class?: number;
   amount?: number;
 }
+
+
+export interface FeesCardInterface{
+    _id?:mongoose.Types.ObjectId | string
+    amount:number,
+    class:number
+}

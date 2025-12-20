@@ -88,7 +88,7 @@ const AddFeesSchemaContent = () => {
             <label htmlFor="class">Class</label>
             <select name="class" id="class" value={feesSchema.class} onChange={handleSelectChange}>
                 {[...new Array(12)].map((_, index)=>(
-                    <option value={String(index +1) } key={_+100}>{index+1}</option>
+                    <option value={String(index +1) } key={100+index}>{index+1}</option>
                 ))}
             </select>
             <label htmlFor="amount">Amount</label>
