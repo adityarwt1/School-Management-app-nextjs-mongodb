@@ -1,6 +1,7 @@
 import { Months } from "@/enums/MonthEnut";
 import { PaymentMode } from "@/types/Payment";
 import mongoose from "mongoose";
+import { StanderedResponse } from "../ApiResponse/standeredResponse";
 
 export interface PaymentInterface{
     paymentMode:PaymentMode,
@@ -19,3 +20,13 @@ export interface PaymentAddInterface {
   month: Months;
 }
 
+export interface PaymentHistory{
+  _id:string | mongoose.Types.ObjectId
+  month:number,
+  amount:number,
+  remains:number,
+  createdAt:Date
+}
+export interface PaymentHistoryInterface extends StanderedResponse {
+  paymentHistory?: PaymentHistory[]
+}

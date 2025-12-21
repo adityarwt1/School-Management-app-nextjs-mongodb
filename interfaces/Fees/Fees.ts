@@ -1,4 +1,4 @@
-import mongoose,  from "mongoose"
+import mongoose from "mongoose"
 
 export interface FeesSchema{
     id?:string | mongoose.Types.ObjectId
@@ -19,3 +19,4 @@ export interface FeesCardInterface{
     amount:number,
     class:number
 }
+

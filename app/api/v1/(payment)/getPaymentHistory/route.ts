@@ -1,4 +1,4 @@
-import { StanderedResponse } from "@/interfaces/ApiResponse/standeredResponse";
+import { PaymentHistoryInterface } from "@/interfaces/PayMent/Payment";
 import { TokenInteface } from "@/interfaces/Token/tokenInterface";
 import { mongoconnect } from "@/lib/mongodb";
 import { Payment } from "@/models/Payment";
@@ -6,7 +6,7 @@ import { TokenServices } from "@/services/Token/token";
 import mongoose from "mongoose";
 import {  NextResponse } from "next/server";
 
-export async function GET() :Promise<NextResponse<StanderedResponse>> {
+export async function GET() :Promise<NextResponse<PaymentHistoryInterface>> {
     const tokenServices  = new TokenServices()
     try {
 
@@ -30,7 +30,7 @@ export async function GET() :Promise<NextResponse<StanderedResponse>> {
         }
 
         // using mongodb aggregate return the histor of othe the payment
-        const payMentHistory = await Payment.aggregate([
+        const paymentHistory = await Payment.aggregate([
             {
                 $match:{
                     schoolId:new mongoose.Types.ObjectId(tokenInfo.schoolId),
@@ -53,7 +53,7 @@ export async function GET() :Promise<NextResponse<StanderedResponse>> {
             }
         ])
         return NextResponse.json(
-          { success: true, payMentHistory },
+          { success: true, paymentHistory },
           { status: 200 }
         );
     } catch (error) {
