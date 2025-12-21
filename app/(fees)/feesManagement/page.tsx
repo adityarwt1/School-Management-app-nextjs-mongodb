@@ -61,7 +61,9 @@ const FeesManagamentPage = async () => {
   return (
     <div className="flex flex-col">
       <div className="w-full flex justify-between items-center">
-        <div>{}/{totalFeesResult[0].totalAmount}</div>
+        <div>
+          {totalFees[0].totalAmountPaid}/{totalFeesResult[0].totalAmount}
+        </div>
       </div>
       <div className="flex flex-row flex-wrap gap-3 my-10 mx-10">
         {fees.map((fees: FeesCardInterface) => (
