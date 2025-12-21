@@ -6,6 +6,7 @@ import Link from 'next/link'
 import {RefreshCcw} from "lucide-react"
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import { PaymentStatus } from '@/enums/Payment'
 
 const FeesHistoryComponent = () => {
 
@@ -57,13 +58,17 @@ const FeesHistoryComponent = () => {
 
   return (
     <div className="border mx-2 border-black/15 rounded-xl w-[30%] px-2  gap-2 flex flex-col py-5">
-      <div className='w-full flex justify-evenly items-center px-2 py-1'>
-        <div className='text-left w-full'>Last Year: {paidDocumentCount}/12</div>
-        <button onClick={handleRefresh} className='flex gap-1'><RefreshCcw size={20}/>Refresh</button>
+      <div className="w-full flex justify-evenly items-center px-2 py-1">
+        <div className="text-left w-full">
+          Last Year: {paidDocumentCount}/12
+        </div>
+        <button onClick={handleRefresh} className="flex gap-1">
+          <RefreshCcw size={20} />
+          Refresh
+        </button>
       </div>
       <div className="w-full px-4 py-1 flex justify-evenly">
         <div className="w-full text-left">Month</div>
-        <div className="w-full text-left">Status</div>
         <div className="w-full text-left">₹Amount</div>
         <div className="w-full text-left">Remaining</div>
         <div className="w-full text-left">Pay</div>
@@ -73,22 +78,32 @@ const FeesHistoryComponent = () => {
           <>
             <div
               key={ele._id as string}
-              className="w-full px-4 py-1 border border-black/20 rounded shadow flex justify-evenly"
+              className="w-full px-4 py-1 items-center border border-black/20 rounded shadow flex justify-evenly"
             >
-              <div className="flex w-[20%] text-center ">{Months[ele.month]}</div>
-              <div className="text-green-500 w-[20%]">
-                <span className="font-mono">{`₹${ele.amount}`}</span>
+              <div className="flex w-[20%] text-center ">
+                {Months[ele.month]}
               </div>
-              <div className="text-green-500 w-[20%]">
+          
+              <div className={`text-green-500 w-[20%]`}>
                 <span className="font-mono">{`₹${ele.amount}`}</span>
               </div>
               <div className="text-yellow-600 w-[20%] font-mono">{`₹${ele.remains}`}</div>
-              {ele.remains > 0 ?  (
-                <Link href={`/payFees?mode=payRemains&_id=${ele._id}&amount=${ele.remains}&month=${ele.month}`} className='w-[20%]'>
-                  <button className='px-2 py-1 bg-yellow-600 text-nowrap text-white rounded-md cursor-pointer hover:opacity-95 w-full'>Pay {ele.remains}</button>
+              {ele.remains > 0 ? (
+                <Link
+                  href={`/payFees?mode=payRemains&_id=${ele._id}&amount=${ele.remains}&month=${ele.month}`}
+                  className="w-[20%]"
+                >
+                  <button className="px-2 py-1 bg-yellow-600 text-nowrap text-white rounded-md cursor-pointer hover:opacity-95 w-full">
+                    Pay {ele.remains}
+                  </button>
                 </Link>
-              ):(
-                <button className='bg-green-600 text-white px-2 py-1 rounded-md  hover:opacity-95 w-[20%]' aria-disabled={true}>Paid</button>
+              ) : (
+                <button
+                  className="bg-green-600 text-white px-2 py-1 rounded-md  hover:opacity-95 w-[20%]"
+                  aria-disabled={true}
+                >
+                  Paid
+                </button>
               )}
             </div>
           </>
@@ -96,9 +111,7 @@ const FeesHistoryComponent = () => {
       ) : (
         <div>Payment History not found</div>
       )}
-      {error && (
-        <div>{error}</div>
-      )}
+      {error && <div>{error}</div>}
     </div>
   );
 }
