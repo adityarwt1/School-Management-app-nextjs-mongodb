@@ -21,6 +21,10 @@ const PaymentSchema: Schema<PaymentInterfaceDocument> = new Schema(
       required: true,
       enum: [PaymentMode.ONLINE, PaymentMode.OFFLINE], // Assuming PaymentMode is an enum
     },
+    year:{
+      type:Number,
+      required:true,
+    },
     month: {
       type: Number,
       required: true,
