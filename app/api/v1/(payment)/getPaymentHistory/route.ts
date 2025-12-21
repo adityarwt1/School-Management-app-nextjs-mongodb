@@ -4,9 +4,9 @@ import { mongoconnect } from "@/lib/mongodb";
 import { Payment } from "@/models/Payment";
 import { TokenServices } from "@/services/Token/token";
 import mongoose from "mongoose";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) :Promise<NextResponse<StanderedResponse>> {
+export async function GET() :Promise<NextResponse<StanderedResponse>> {
     const tokenServices  = new TokenServices()
     try {
 
