@@ -15,6 +15,7 @@ export interface StudentInterface{
     contactNumber:number
     password:string
     govt:boolean
+    currentClass:number
 }
 
 export interface StudenterRegisterInterface {
@@ -30,6 +31,7 @@ export interface StudenterRegisterInterface {
   profilePicture: string;
   contactNumber: number;
   password: string;
+  currentClass:number
 }
 
 export interface StudentLoginInterface{

@@ -36,7 +36,7 @@ const StudentDashboard =async () => {
       <div className="flex flex-col gap-1"> 
         {student && <StudentCard student={student} key={student?.diseCode} />}
         {/** attendace chart */}
-        <div className='flex w-full bg-amber-300 justify-between'>
+        <div className='flex w-full  justify-between'>
           <AttendanceComponent/>
           {!student?.govt && <FeesHistoryComponent/>}
         </div>

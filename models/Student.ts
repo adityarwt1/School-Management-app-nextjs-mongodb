@@ -10,13 +10,18 @@ const StudentSchema: Schema<StudentDocument> = new Schema(
       required: true,
       ref: "School",
     },
-
     fullName: {
       type: String,
       required: true,
       trim: true,
     },
-
+    currentClass:{
+      type:Number,
+      required:true,
+      min:1,
+      max:12
+      // enum:Object.values(Class)
+    },
     fatherName: {
       type: String,
       required: true,
