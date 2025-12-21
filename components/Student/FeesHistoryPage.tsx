@@ -6,7 +6,6 @@ import Link from 'next/link'
 import {RefreshCcw} from "lucide-react"
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-import { PaymentStatus } from '@/enums/Payment'
 
 const FeesHistoryComponent = () => {
 
