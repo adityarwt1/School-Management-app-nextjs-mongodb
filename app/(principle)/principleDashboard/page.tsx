@@ -1,4 +1,4 @@
-import { TokentInteface } from "@/interfaces/Token/tokenInterface"
+import { TokenInterface } from "@/interfaces/Token/tokenInterface"
 import {redirect } from "next/navigation"
 import { TokenServices } from "@/services/Token/token"
 import React, { Suspense } from "react"
@@ -14,7 +14,7 @@ import SchoolCardSkeleton from "@/components/School/SchoolCardSkeleton"
 const PrincipleDashBoard =async ()=>{
     const tokenServices = new TokenServices()
 
-    const principleInfo = await tokenServices.getTokenInfo() as TokentInteface
+    const principleInfo = await tokenServices.getTokenInfo() as TokenInterface
     console.log(principleInfo)
     if(principleInfo.role !== "principle" ){
         redirect("/principleLogin")

@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {hash} from "bcryptjs";
 import { mongoconnect } from "@/lib/mongodb";
 import Teacher from "@/models/Teacher";
-import { TokentInteface } from "@/interfaces/Token/tokenInterface";
+import { TokenInterface } from "@/interfaces/Token/tokenInterface";
 import School from "@/models/School";
 import { JWTSERVICES } from "@/services/JWT/jwt";
 import { CookieServices } from "@/services/Cookie/cookie";
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) :Promise<NextResponse<StanderedResp
             return NextResponse.json({success:false, error:"Failed to create teacher!"},{status:500})
         }
 
-        const tokenPayload:TokentInteface = {
+        const tokenPayload:TokenInterface = {
             _id:teacher._id,
             role:"teacher",
             schoolId:school._id,

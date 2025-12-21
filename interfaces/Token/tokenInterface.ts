@@ -1,7 +1,7 @@
 import { Role } from "@/types/Role";
 import mongoose from "mongoose";
 
-export interface TokentInteface{
+export interface TokenInteface{
     _id:string | mongoose.Types.ObjectId
     role:Role,
     schoolId:string | mongoose.Types.ObjectId,

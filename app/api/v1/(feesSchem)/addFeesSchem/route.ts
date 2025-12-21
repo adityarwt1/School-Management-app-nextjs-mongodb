@@ -5,7 +5,7 @@ import { Fees } from "@/models/FeesSchem";
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import { TokenServices } from "@/services/Token/token";
-import { TokentInteface } from "@/interfaces/Token/tokenInterface";
+import { TokenInterface } from "@/interfaces/Token/tokenInterface";
 
 export async function POST(
   req: NextRequest
@@ -13,7 +13,7 @@ export async function POST(
   try {
     // Get token info first
     const token = new TokenServices();
-    const tokenInfo = (await token.getTokenInfo()) as TokentInteface;
+    const tokenInfo = (await token.getTokenInfo()) as TokenInterface;
 
     // Check authentication
     if (!tokenInfo || !tokenInfo.schoolId) {

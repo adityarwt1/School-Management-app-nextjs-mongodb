@@ -1,6 +1,6 @@
 import { PrincipleLoginRequest, PrincipleLogistResponse } from "@/interfaces/ApiResponse/Principle/loginprinciple";
 import { PrincipleLoginFileter } from "@/interfaces/Filter/filterResponse";
-import { TokentInteface } from "@/interfaces/Token/tokenInterface";
+import { TokenInterface } from "@/interfaces/Token/tokenInterface";
 import { mongoconnect } from "@/lib/mongodb";
 import Principle from "@/models/Principle";
 import bcrypt from "bcryptjs";
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest):Promise<NextResponse<PrincipleLogis
 
         // token setup
         const school = await School.findOne({principleId:principleDoc?._id}).select("_id  govt").lean()
-        const tokenPayload: TokentInteface = {
+        const tokenPayload: TokenInterface = {
           _id: principleDoc._id,
           role: "principle",
           schoolId: school ? school._id : null,

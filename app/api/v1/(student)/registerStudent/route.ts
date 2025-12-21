@@ -1,5 +1,5 @@
 import { StanderedResponse } from "@/interfaces/ApiResponse/standeredResponse";
-import { TokentInteface } from "@/interfaces/Token/tokenInterface";
+import { TokenInterface } from "@/interfaces/Token/tokenInterface";
 import { mongoconnect } from "@/lib/mongodb";
 import School from "@/models/School";
 import Student from "@/models/Student";
@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) :Promise<NextResponse<StanderedResp
             return NextResponse.json({success:false, error:"Failed to creat student!"},{status:500})
         }
 
-        const tokenPayload :TokentInteface ={
+        const tokenPayload :TokenInterface ={
             _id:student._id,
             role:"student",
             schoolId:school._id,

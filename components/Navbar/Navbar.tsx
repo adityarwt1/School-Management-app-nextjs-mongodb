@@ -1,4 +1,4 @@
-import { TokentInteface } from '@/interfaces/Token/tokenInterface'
+import { TokenInterface } from '@/interfaces/Token/tokenInterface'
 import { TokenServices } from '@/services/Token/token'
 import React from 'react'
 import StudentNav from '@/components/Navbar/StudentNav'
@@ -10,7 +10,7 @@ import NavigationButton from './NavigationButton'
 
 const Navbar = async () => {
     const tokeServices = new TokenServices()
-    const tokenInfo = await tokeServices.getTokenInfo() as TokentInteface
+    const tokenInfo = await tokeServices.getTokenInfo() as TokenInterface
 
     const isConnected = await mongoconnect()
 

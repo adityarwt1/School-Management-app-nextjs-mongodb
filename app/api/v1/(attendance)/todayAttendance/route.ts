@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { mongoconnect } from "@/lib/mongodb";
 import Atttendace from "@/models/Attendance";
 // import jwt from 'jsonwebtoken'
-// import { TokentInteface } from "@/interfaces/Token/tokenInterface";
+// import { TokenInterface } from "@/interfaces/Token/tokenInterface";
 export async function GET(req: NextRequest) {
     try {
         const role = req.nextUrl.searchParams.get("role")
@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({success:false, error:'User aunotherize'},{status:401})
         }
 
-        // const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string) as TokentInteface
+        // const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string) as TokenInterface
 
         const isConnected = await mongoconnect();
 

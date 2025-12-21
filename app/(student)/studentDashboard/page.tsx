@@ -2,7 +2,7 @@ import AttendanceComponent from '@/components/Student/AttendanceComponent'
 import FeesHistoryComponent from '@/components/Student/FeesHistoryPage'
 import StudentCard from '@/components/Student/StudentCard'
 import { StudentInterface } from '@/interfaces/Student/Student'
-import { TokentInteface } from '@/interfaces/Token/tokenInterface'
+import { TokenInteface } from '@/interfaces/Token/tokenInterface'
 import { mongoconnect } from '@/lib/mongodb'
 import Student from '@/models/Student'
 import { TokenServices } from '@/services/Token/token'
@@ -11,7 +11,7 @@ import React from 'react'
 
 const StudentDashboard =async () => {
   const tokenServices =new TokenServices()
-  const tokenInfo = await tokenServices.getTokenInfo() as TokentInteface
+  const tokenInfo = await tokenServices.getTokenInfo() as TokenInteface
   console.log("token information",tokenInfo)
 
   if(!tokenInfo || !tokenInfo._id){

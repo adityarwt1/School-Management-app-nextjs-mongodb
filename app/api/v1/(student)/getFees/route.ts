@@ -1,4 +1,4 @@
-import { TokentInteface } from "@/interfaces/Token/tokenInterface";
+import { TokenInterface } from "@/interfaces/Token/tokenInterface";
 import { mongoconnect } from "@/lib/mongodb";
 import { Payment } from "@/models/Payment";
 import { TokenServices } from "@/services/Token/token";
@@ -9,7 +9,7 @@ export async function GET(req:NextRequest) :Promise<NextResponse>{
     const tokenServices = new TokenServices()
     const signInUrlForStudent = new URL('/studentLogin',req.url)
     try {
-        const tokenInfo = await tokenServices.getTokenInfo()as TokentInteface
+        const tokenInfo = await tokenServices.getTokenInfo()as TokenInterface
 
         if(!tokenInfo){
             return NextResponse.redirect(signInUrlForStudent);

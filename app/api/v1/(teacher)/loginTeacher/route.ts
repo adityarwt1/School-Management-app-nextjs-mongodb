@@ -1,6 +1,6 @@
 import { StanderedResponse } from "@/interfaces/ApiResponse/standeredResponse";
 import { TeacherInterFace, TeacherLoginInterface } from "@/interfaces/Teacher/TeacherInterfaces";
-import { TokentInteface } from "@/interfaces/Token/tokenInterface";
+import { TokenInterface } from "@/interfaces/Token/tokenInterface";
 import { mongoconnect } from "@/lib/mongodb";
 import Teacher from "@/models/Teacher";
 import { CookieServices } from "@/services/Cookie/cookie";
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) :Promise<NextResponse<StanderedResp
             return NextResponse.json({success:false, error:"Wrong password!"},{status:404})
         }
 
-        const tokenPayload:TokentInteface ={
+        const tokenPayload:TokenInterface ={
             _id:teacher._id,
             role:"teacher",
             schoolId: teacher.schoolId,

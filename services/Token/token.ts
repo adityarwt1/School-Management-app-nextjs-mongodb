@@ -1,10 +1,10 @@
 
-import { TokentInteface } from "@/interfaces/Token/tokenInterface";
+import { TokenInterface } from "@/interfaces/Token/tokenInterface";
 import { cookies } from "next/headers";
 import jwt, { JwtPayload } from "jsonwebtoken"
 
 export  class  TokenServices{
-    async getTokenInfo():Promise<TokentInteface | null  | JwtPayload | string>{
+    async getTokenInfo():Promise<TokenInterface | null  | JwtPayload | string>{
         const cookie = await cookies()
         const token = cookie.get("smaToken")?.value;
 
@@ -12,7 +12,7 @@ export  class  TokenServices{
             return null
         }
 
-        const decoded:TokentInteface | JwtPayload | string= jwt.verify(token, process.env.JWT_SECRET as string)
+        const decoded:TokenInterface | JwtPayload | string= jwt.verify(token, process.env.JWT_SECRET as string)
         return decoded
     }
 }

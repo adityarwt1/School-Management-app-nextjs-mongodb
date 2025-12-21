@@ -1,5 +1,5 @@
 import { StanderedResponse } from "@/interfaces/ApiResponse/standeredResponse";
-import { TokentInteface } from "@/interfaces/Token/tokenInterface";
+import { TokenInterface } from "@/interfaces/Token/tokenInterface";
 import { mongoconnect } from "@/lib/mongodb";
 import { Payment } from "@/models/Payment";
 import { TokenServices } from "@/services/Token/token";
@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest):Promise<NextResponse<StanderedResponse>> {
     const tokenServerices = new TokenServices()
     try {
-        const tokenInfo = await tokenServerices.getTokenInfo() as TokentInteface
+        const tokenInfo = await tokenServerices.getTokenInfo() as TokenInterface
 
         if(!tokenInfo){
             return NextResponse.json({success:false,error:"Unotherized"},{status:401})

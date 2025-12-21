@@ -1,5 +1,5 @@
 import { PrincipleRegisteredRequest, PrincipleRegisterResponse } from "@/interfaces/ApiResponse/Principle/registerInterface";
-import { TokentInteface } from "@/interfaces/Token/tokenInterface";
+import { TokenInterface } from "@/interfaces/Token/tokenInterface";
 import { mongoconnect } from "@/lib/mongodb";
 import Principle from "@/models/Principle";
 import bcrypt from "bcryptjs";
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest):Promise<NextResponse<PrincipleRegis
         }
 
        /// maing the token fo 
-       const tokenPayload :TokentInteface={
+       const tokenPayload :TokenInterface={
         _id:principle._id,
         role:"principle",
         schoolId:principle.schoolId,

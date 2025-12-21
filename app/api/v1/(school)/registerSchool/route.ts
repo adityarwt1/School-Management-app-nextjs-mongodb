@@ -4,7 +4,7 @@ import { mongoconnect } from "@/lib/mongodb";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken"
-import { TokentInteface } from "@/interfaces/Token/tokenInterface";
+import { TokenInterface } from "@/interfaces/Token/tokenInterface";
 import School from "@/models/School";
 import Principle from "@/models/Principle";
 import { JWTSERVICES } from "@/services/JWT/jwt";
@@ -28,7 +28,7 @@ export async function  POST(req: NextRequest) :Promise<NextResponse<StanderedRes
             return NextResponse.json({success:false, error:"Unotherized acccess."},{status:401})
         }
 
-        const decoded = (jwt.verify(token, process.env.JWT_SECRET as string)) as TokentInteface;
+        const decoded = (jwt.verify(token, process.env.JWT_SECRET as string)) as TokenInterface;
 
         //validate role
         if(decoded.role !== "principle"){
@@ -62,7 +62,7 @@ export async function  POST(req: NextRequest) :Promise<NextResponse<StanderedRes
             govt:data.govt
         })
         // cookie set to the cookie
-        const newTokenPayload :TokentInteface={
+        const newTokenPayload :TokenInterface={
             _id:decoded._id,
             role:"principle",
             schoolId:school._id,

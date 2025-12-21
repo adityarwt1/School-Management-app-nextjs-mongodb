@@ -3,7 +3,7 @@ import { Fees } from '@/models/FeesSchem'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import jwt from 'jsonwebtoken'
-import { TokentInteface } from '@/interfaces/Token/tokenInterface'
+import { TokenInterface } from '@/interfaces/Token/tokenInterface'
 import { FeesCardInterface } from '@/interfaces/Fees/Fees'
 import FeesCard from '@/components/FeesSchema/FeesCard'
 import mongoose from 'mongoose'
@@ -23,7 +23,7 @@ const FeesManagamentPage = async () => {
     return redirect("/principleLogin")
   }
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as TokentInteface
+  const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as TokenInterface
 
   if(!decoded){
     throw new Error("Internal server issue.")
