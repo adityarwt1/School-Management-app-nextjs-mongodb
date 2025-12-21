@@ -20,6 +20,10 @@ const PaymentSchema: Schema<PaymentInterfaceDocument> = new Schema(
       required: true,
       enum:[PaymentMode.ONLINE , PaymentMode.OFFLINE], // Assuming PaymentMode is an enum
     },
+    amount:{
+      type:Number,
+      required:true
+    },
     remains: {
       type: Number,
       required: true,
@@ -32,7 +36,7 @@ const PaymentSchema: Schema<PaymentInterfaceDocument> = new Schema(
 );
 
 
-export const Payment = mongoose.model<PaymentInterfaceDocument>(
+export const Payment = mongoose.models.Payment ||  mongoose.model<PaymentInterfaceDocument>(
   "Payment",
   PaymentSchema
 );
