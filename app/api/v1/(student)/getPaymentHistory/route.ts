@@ -4,11 +4,13 @@ import { mongoconnect } from "@/lib/mongodb";
 import { Payment } from "@/models/Payment";
 import { TokenServices } from "@/services/Token/token";
 import mongoose from "mongoose";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(): Promise<NextResponse<PaymentHistoryInterface>> {
+export async function GET(req:NextRequest): Promise<NextResponse<PaymentHistoryInterface>> {
   const tokenServices = new TokenServices();
-
+  const searchParams =  req.nextUrl.searchParams;
+  const skip = Number(searchParams.get("skip"))|| 0;
+  const limit = Number(searchParams.get("limit")) || 12
   try {
     const tokenInfo = (await tokenServices.getTokenInfo()) as TokenInteface;
 
@@ -42,25 +44,31 @@ export async function GET(): Promise<NextResponse<PaymentHistoryInterface>> {
       );
     }
 
-    const paymentHistory = await Payment.aggregate([
+    const result = await Payment.aggregate([
       {
         $match: {
           schoolId: new mongoose.Types.ObjectId(tokenInfo.schoolId),
           studentId: new mongoose.Types.ObjectId(tokenInfo._id),
         },
       },
+
       {
-        $project: {
-          _id: 1,
-          month: 1,
-          amount: 1,
-          remains: 1,
-          createdAt: 1,
-        },
-      },
-      {
-        $sort: {
-          month: -1,
+        $facet: {
+          data: [
+            { $sort: { month: -1 } },
+            { $skip: skip },
+            { $limit: limit },
+            {
+              $project: {
+                _id: 1,
+                month: 1,
+                amount: 1,
+                remains: 1,
+                createdAt: 1,
+              },
+            },
+          ],
+          totalCount: [{ $count: "count" }],
         },
       },
     ]);
@@ -68,7 +76,8 @@ export async function GET(): Promise<NextResponse<PaymentHistoryInterface>> {
     return NextResponse.json(
       {
         success: true,
-        paymentHistory,
+        paymentHistory:result[0].data,
+        totalCount:result[0]["totalCount"][0].count,
         status: 200,
       },
       { status: 200 }

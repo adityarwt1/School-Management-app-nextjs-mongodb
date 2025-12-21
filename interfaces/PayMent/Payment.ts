@@ -28,5 +28,6 @@ export interface PaymentHistory{
   createdAt:Date
 }
 export interface PaymentHistoryInterface extends StanderedResponse {
-  paymentHistory?: PaymentHistory[]
+  paymentHistory?: PaymentHistory[],
+  totalCount?:number
 }
