@@ -5,9 +5,13 @@ import NavigationButton from './NavigationButton'
 const StudentNav = () => {
   return (
     <div className='text-white'>
+       <Link href='/studentDashboard'>
+        <NavigationButton  title='Dashboard'/>
+      </Link>
       <Link href='/noticeManagement'>
         <NavigationButton  title='Notice Management'/>
       </Link>
+     
     </div>
   );
 }

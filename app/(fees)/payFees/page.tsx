@@ -54,7 +54,7 @@ const PayFeesPage = () => {
       const response = await paymentServices.payFees(feesData)
 
       if(response.success){
-        router.replace('/feesManagement')
+        router.replace('/studentDashboard')
       } else if(response.error){
         setError(response.error)
       } else {
