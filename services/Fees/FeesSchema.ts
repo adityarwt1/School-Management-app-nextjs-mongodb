@@ -20,7 +20,8 @@ export class FeesServices{
             return {
                 success:false,
                 error:"Internal server issue.",
-                message:(error as Error).message
+                message:(error as Error).message,
+                status:500
             }
         }
     }
@@ -41,7 +42,8 @@ export class FeesServices{
             return {
                 success:false,
                 error:"Internal server issue",
-                message:(error as Error).message
+                message:(error as Error).message,
+                status:500
             }
         }
     }

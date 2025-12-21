@@ -24,6 +24,7 @@ export class PrincipleApi {
       return {
         success: false,
         error: "Internal server issue.",
+        status:500
       };
     }
   }
@@ -43,7 +44,8 @@ export class PrincipleApi {
       } catch {
         return {
           success:false,
-          error:"Internal server issue."
+          error:"Internal server issue.",
+          status:500
         }
       }
   }

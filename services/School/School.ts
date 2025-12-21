@@ -19,7 +19,8 @@ export class SchoolApi {
             return {
                 success:false,
                 error:"Internal server issue.",
-                message:(error as Error).message
+                message:(error as Error).message,
+                
             }
         }
     }

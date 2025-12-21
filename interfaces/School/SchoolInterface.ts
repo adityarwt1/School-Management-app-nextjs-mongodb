@@ -12,7 +12,7 @@ export interface SchoolInterface  {
     principleId:string | mongoose.Types.ObjectId 
 }
 
-export interface SchoolRegisterResponse{
+export interface SchoolRegisterResponse {
     success:boolean
     error?:string
     message?:string

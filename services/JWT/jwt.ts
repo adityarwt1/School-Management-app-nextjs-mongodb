@@ -1,7 +1,7 @@
-import { TokenInterface } from "@/interfaces/Token/tokenInterface"
+import { TokenInteface } from "@/interfaces/Token/tokenInterface"
 import jwt from "jsonwebtoken"
 export class JWTSERVICES{
-    createToken(tokenPayload:TokenInterface):string | null{
+    createToken(tokenPayload:TokenInteface):string | null{
         try {
           const token = jwt.sign(
             tokenPayload,

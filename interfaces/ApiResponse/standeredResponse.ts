@@ -1,5 +1,6 @@
 export interface StanderedResponse{
     success:boolean,
     error?:string
-    message?:string
+    message?:string,
+    status:number
 }

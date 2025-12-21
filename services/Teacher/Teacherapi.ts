@@ -19,7 +19,8 @@ export class TeacherApi{
             return {
                 success:false,
                 error:"Internal server issue.",
-                message:(error as Error).message
+                message:(error as Error).message,
+                status:500
             }
         }
     }
@@ -36,10 +37,12 @@ export class TeacherApi{
 
             const resData:StanderedResponse = await response.json()
             return resData;
-        } catch {
+        } catch (error) {
             return {
                 success:false, 
-                error:"Internal server issue!"
+                error:"Internal server issue!",
+                message:(error as Error).message,
+                status:500
             }
         }
     }
