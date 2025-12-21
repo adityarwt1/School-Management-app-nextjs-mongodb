@@ -11,7 +11,7 @@ export interface StudentInterface{
     diseCode:number,
     address:string,
     email:string,
-    profilePicture:string
+    profilePicture:string 
     contactNumber:number
     password:string
     govt:boolean
@@ -38,3 +38,16 @@ export interface StudentLoginInterface{
   password:string,
 }
 
+
+
+export interface StudentCardInterfaceProps {
+    fullName:string,
+    govt:boolean,
+    profilePicture:string
+    email:string,
+    diseCode:number
+}
+
+export interface StudentCardInterface{
+  student:StudentCardInterfaceProps
+}
