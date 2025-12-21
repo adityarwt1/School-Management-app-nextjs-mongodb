@@ -1,3 +1,5 @@
+import AttendanceComponent from '@/components/Student/AttendanceComponent'
+import FeesHistoryComponent from '@/components/Student/FeesHistoryPage'
 import StudentCard from '@/components/Student/StudentCard'
 import { StudentInterface } from '@/interfaces/Student/Student'
 import { TokentInteface } from '@/interfaces/Token/tokenInterface'
@@ -25,12 +27,22 @@ const StudentDashboard =async () => {
   }
 
   const student = await Student.findOne({_id:tokenInfo}).lean<StudentInterface>().select('diseCode email fullName govt profilePicture')
-  console.log(student)
+
+  if(!student){
+    redirect('/studentLogin')
+  }
   return (
     <>
-      {student  && <StudentCard  student={student} key={student?.diseCode}/>}
+      <div className="flex flex-col gap-1"> 
+        {student && <StudentCard student={student} key={student?.diseCode} />}
+        {/** attendace chart */}
+        <div className='flex w-full bg-amber-300 justify-between'>
+          <AttendanceComponent/>
+          {!student?.govt && <FeesHistoryComponent/>}
+        </div>
+      </div>
     </>
-  )
+  );
 }
 
 export default StudentDashboard
