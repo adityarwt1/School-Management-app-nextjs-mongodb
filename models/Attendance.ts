@@ -1,4 +1,4 @@
-import { AttendanceInterface } from "@/services/Attendance/Attendance";
+import { AttendanceInterface } from "@/interfaces/Attendance/Attendance";
 import mongoose, { Document, Schema } from "mongoose";
 
 interface AttendaceInterface extends AttendanceInterface , Document{}
