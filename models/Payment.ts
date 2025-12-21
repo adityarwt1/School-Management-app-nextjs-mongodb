@@ -11,6 +11,10 @@ const PaymentSchema: Schema<PaymentInterfaceDocument> = new Schema(
       required: true,
       ref: "Student", // Add reference to Student model if needed
     },
+    schoolId:{
+      type:Schema.Types.ObjectId,
+      required:true,
+    },
     paymentMode: {
       type: String,
       required: true,

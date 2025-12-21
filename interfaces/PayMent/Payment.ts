@@ -4,5 +4,6 @@ import mongoose from "mongoose";
 export interface PaymentInterface{
     paymentMode:PaymentMode,
     remains:number,
-    studentId:mongoose.Types.ObjectId;
+    studentId:mongoose.Types.ObjectId
+    schoolId:mongoose.Types.ObjectId;
 }
