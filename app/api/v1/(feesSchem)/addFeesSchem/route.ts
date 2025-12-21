@@ -5,7 +5,7 @@ import { Fees } from "@/models/FeesSchem";
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import { TokenServices } from "@/services/Token/token";
-import { TokenInterface } from "@/interfaces/Token/tokenInterface";
+import { TokenInteface } from "@/interfaces/Token/tokenInterface";
 
 export async function POST(
   req: NextRequest
@@ -13,12 +13,12 @@ export async function POST(
   try {
     // Get token info first
     const token = new TokenServices();
-    const tokenInfo = (await token.getTokenInfo()) as TokenInterface;
+    const tokenInfo = (await token.getTokenInfo()) as TokenInteface;
 
     // Check authentication
     if (!tokenInfo || !tokenInfo.schoolId) {
       return NextResponse.json(
-        { success: false, error: "Unauthorized!" },
+        { success: false, error: "Unauthorized!", status:401 },
         { status: 401 }
       );
     }
@@ -32,6 +32,7 @@ export async function POST(
         {
           success: false,
           error: "Missing required fields: class and amount are required.",
+          status:400
         },
         { status: 400 }
       );
@@ -43,6 +44,7 @@ export async function POST(
         {
           success: false,
           error: "Class must be between 1 and 12.",
+          status:400
         },
         { status: 400 }
       );
@@ -53,6 +55,7 @@ export async function POST(
       return NextResponse.json(
         {
           success: false,
+          status:400,
           error: "Amount must be a positive number.",
         },
         { status: 400 }
@@ -64,7 +67,7 @@ export async function POST(
 
     if (!isConnected) {
       return NextResponse.json(
-        { success: false, error: "Internal server issue." },
+        { success: false, error: "Internal server issue." , status:500},
         { status: 500 }
       );
     }
@@ -86,6 +89,7 @@ export async function POST(
         {
           success: false,
           error: `Fees for class ${feesSchema.class} already exist.`,
+          status:409
         },
         { status: 409 }
       );
@@ -104,6 +108,7 @@ export async function POST(
       {
         success: true,
         message: `Fees for class ${feesSchema.class} created successfully.`,
+        status:201
       },
       { status: 201 }
     );
@@ -127,6 +132,7 @@ export async function POST(
         {
           success: false,
           error: error.message,
+          status:400
         },
         { status: 400 }
       );
@@ -138,6 +144,7 @@ export async function POST(
         {
           success: false,
           error: "Invalid ID format.",
+          status:400
         },
         { status: 400 }
       );
@@ -149,13 +156,14 @@ export async function POST(
         {
           success: false,
           error: "Invalid JSON format in request body.",
+          status:400
         },
         { status: 400 }
       );
     }
 
     return NextResponse.json(
-      { success: false, error: "Internal server issue." },
+      { success: false, error: "Internal server issue.", status:500 },
       { status: 500 }
     );
   }
