@@ -11,7 +11,6 @@ const StudentLogin = () => {
     password: "",
     ssmId: 0,
   });
-  console.log(studentData)
   const studentServices = new StudentApi();
   const router = useRouter();
 
