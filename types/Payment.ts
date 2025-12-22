@@ -5,3 +5,4 @@ export enum PaymentMode {
   OFFLINE = "offline",
 }
 
+export type PaymentModeMonthly = "normalPay" | "payRemains"

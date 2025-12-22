@@ -1,7 +1,7 @@
 "use client"
 
-import { StanderedResponse } from "@/interfaces/ApiResponse/standeredResponse";
-import { PaymentAddInterface, PaymentHistoryInterface } from "@/interfaces/PayMent/Payment";
+import { StanderedResponse, StatusCode, StatusText } from "@/interfaces/ApiResponse/standeredResponse";
+import { PaymentAddInterface, PaymentHistoryInterface, PayRemainingAmount } from "@/interfaces/PayMent/Payment";
 
 export class PaymentServices {
     async payFees(data:PaymentAddInterface) :Promise<StanderedResponse> {
@@ -43,6 +43,28 @@ export class PaymentServices {
                 error:"Internal server issue.",
                 message:(error as Error).message,
                 status:500
+            }
+        }
+    }
+
+    async payRemainingAmount(data:PayRemainingAmount) : Promise<StanderedResponse>{
+        try {
+            const response = await fetch("/api/v1/payRemainingAmount",{
+                method:'PATCH',
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(data)
+            });
+            const responseData:StanderedResponse = await response.json()
+
+            return responseData;
+        } catch (error) {
+            return {
+                status:StatusCode.INTERNAL_SERVER_ERROR,
+                success:false,
+                error:StatusText.INTERNAL_SERVER_ERROR,
+                message:(error as Error).message
             }
         }
     }

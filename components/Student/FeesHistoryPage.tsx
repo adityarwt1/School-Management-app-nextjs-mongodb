@@ -142,7 +142,7 @@ const FeesHistoryComponent = () => {
                 </td>
                 <td className='p-3 border'>
                   {ele.remains > 0 ? (
-                    <Link href={`/payFees?month=${ele.month}`}>
+                    <Link href={`/payFees?mode=payRemains&amount=${ele.remains}&_id=${ele.paymentId}&month=${ele.month}`}>
                       <button className='bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600'>
                         Pay ₹{ele.remains}
                       </button>

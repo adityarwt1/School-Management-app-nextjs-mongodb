@@ -3,9 +3,9 @@
 import { Months } from '@/enums/MonthEnut'
 import { PaymentAddInterface } from '@/interfaces/PayMent/Payment'
 import { PaymentServices } from '@/services/Payment/Payment'
-import { PaymentMode } from '@/types/Payment'
-import { useRouter } from 'next/navigation'
-import React, { Suspense, useState } from 'react'
+import { PaymentMode, PaymentModeMonthly } from '@/types/Payment'
+import { useRouter, useSearchParams } from 'next/navigation'
+import React, { Suspense, useEffect, useState } from 'react'
 
 const PayFeesPage = () => {
   const [feesData, setFeesData]= useState<PaymentAddInterface>({
@@ -15,7 +15,10 @@ const PayFeesPage = () => {
     year:new Date().getFullYear(),
     paymentMode:null
   })
+  const searchParams = useSearchParams()
+
   console.log(feesData)
+  const [paymentMode, setPaymentMode] = useState<"payRemains"|"normalPay">("normalPay")
   const [error, setError] = useState<string>("")
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const paymentServices = new PaymentServices()
@@ -68,6 +71,21 @@ const PayFeesPage = () => {
     }
   }
 
+  useEffect(()=>{
+    const getCurrentMode = ()=>{
+      const _id = searchParams.get("_id")
+      const month = searchParams.get('month')
+      const mode = searchParams.get("mode")
+      const amount = searchParams.get('amount')
+      if(mode){
+        setPaymentMode(mode as PaymentModeMonthly )
+      }
+
+      if(_id  && month && amount ){
+        // set
+      }
+    }
+  },[searchParams])
   
   return (
     <div>
