@@ -1,3 +1,4 @@
+import { StatusCode, StatusText } from "@/interfaces/ApiResponse/standeredResponse";
 import { PaymentHistoryInterface } from "@/interfaces/PayMent/Payment";
 import { TokenInteface } from "@/interfaces/Token/tokenInterface";
 import { mongoconnect } from "@/lib/mongodb";
@@ -88,9 +89,9 @@ export async function GET(req:NextRequest): Promise<NextResponse<PaymentHistoryI
     return NextResponse.json(
       {
         success: false,
-        error: "Internal server issue.",
+        error: StatusText.INTERNAL_SERVER_ERROR,
         message: (error as Error).message,
-        status: 500,
+        status: StatusCode.INTERNAL_SERVER_ERROR,
       },
       { status: 500 }
     );

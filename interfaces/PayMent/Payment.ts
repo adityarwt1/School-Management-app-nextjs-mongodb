@@ -1,7 +1,7 @@
 import { Months } from "@/enums/MonthEnut";
 import { PaymentMode } from "@/types/Payment";
 import mongoose from "mongoose";
-import { StanderedResponse } from "../ApiResponse/standeredResponse";
+import {  StanderedResponse } from "../ApiResponse/standeredResponse";
 
 export interface PaymentInterface{
     paymentMode:PaymentMode,

@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import { StanderedResponse } from "../ApiResponse/standeredResponse";
 
 export interface FeesSchema{
     id?:string | mongoose.Types.ObjectId
@@ -20,3 +21,10 @@ export interface FeesCardInterface{
     class:number
 }
 
+export interface FeesSchema{
+  class:number,
+  baseAmount:number
+}
+export interface CurrentFessSchema extends StanderedResponse{
+  fees?:FeesSchema
+}
