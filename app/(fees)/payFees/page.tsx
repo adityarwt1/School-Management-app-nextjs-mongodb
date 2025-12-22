@@ -5,7 +5,7 @@ import { PaymentAddInterface } from '@/interfaces/PayMent/Payment'
 import { PaymentServices } from '@/services/Payment/Payment'
 import { PaymentMode } from '@/types/Payment'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { Suspense, useState } from 'react'
 
 const PayFeesPage = () => {
   const [feesData, setFeesData]= useState<PaymentAddInterface>({
@@ -128,4 +128,15 @@ const PayFeesPage = () => {
   );
 }
 
-export default PayFeesPage
+const PayFeesPageContent = ()=>{
+  return (
+    <Suspense fallback={(
+      <>
+      <div>Loadin...</div>
+      </>
+    )}>
+      <PayFeesPage/>
+    </Suspense>
+  )
+}
+export default PayFeesPageContent;

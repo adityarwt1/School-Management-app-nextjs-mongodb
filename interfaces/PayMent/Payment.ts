@@ -31,3 +31,8 @@ export interface PaymentHistoryInterface extends StanderedResponse {
   paymentHistory?: PaymentHistory[],
   totalCount?:number
 }
+
+export interface PayRemainingAmount {
+  _id:string | mongoose.Types.ObjectId,
+  amount:number,
+}
